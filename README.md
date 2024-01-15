@@ -1,3 +1,3 @@
 # Floema
 ## Description
-A creative website from Bizarro's Awwwards academy course
+Bizarro's Awwwards academy course on building creative immersive websites from scratch without frameworks
