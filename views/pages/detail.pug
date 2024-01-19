@@ -29,6 +29,7 @@ block content
                                 strong.detail_information_item_title=item.information_label
                                 span.detail_information_item_description=item.information_description
                     
-                    a.detail_information_link(href=product.data.link_url.url)=product.data.link_text
+                a.detail_information_link(href=product.data.link_url.url target="_blank"") #{product.data.link_text}
+
 
 
