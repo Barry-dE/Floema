@@ -9,6 +9,7 @@ block content
             .collections_titles
                 each collection, index in collectionsResult
                     .collections_titles_label=`${home.data.collection} ${index === 0 ? "One": index === 1 ? "Two" : index === 2 ? "Three" : index === 3 ? "Four" : ""}`
+                    .collections_titles_title=collection.data.title
 
 
 
@@ -17,7 +18,7 @@ block content
                 .collections_gallery_wrapper
                     each collection in collectionsResult
                         each product in collection.data.products
-                            a.collections_gallery_link
+                            a.collections_gallery_link(href=Link(product.products_product))
                                 figure.collection_gallery_media
                                     img.collections_gallery_media_image(alt=product.products_product.data.image.alt src=product.products_product.data.image.url) 
 

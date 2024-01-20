@@ -10,7 +10,7 @@ block content
                     img.detail_media_image(alt=product.data.image.alt src=product.data.image.url)
 
             .detail_information
-                p.detail_information_collection=product.data.title
+                p.detail_information_collection=product.data.collection.data.title
 
                 h1.detail_information_title=product.data.title
 
@@ -29,7 +29,7 @@ block content
                                 strong.detail_information_item_title=item.information_label
                                 span.detail_information_item_description=item.information_description
                     
-                a.detail_information_link(href=product.data.link_url.url target="_blank"") #{product.data.link_text}
+                a.detail_information_link(href=product.data.link_url.url target="_blank")=product.data.link_text
 
 
 
