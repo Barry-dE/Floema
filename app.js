@@ -3,7 +3,7 @@ const express = require('express')
 const app = express()
 const errorHandler = require('errorhandler')
 const path = require('path')
-const port = 3000
+const port = 5173
 
 const Prismic = require('@prismicio/client')
 const PrismicDOM = require('prismic-dom')
@@ -28,9 +28,11 @@ const handleLinkResolver = (doc) => {
   if (doc === 'product') {
     return `/detail/${doc.slug}`
   }
-  if (doc === 'collection') {
+
+  if (doc === 'collections') {
     return '/collection'
   }
+
   if (doc === 'about') {
     return '/about'
   }
@@ -49,21 +51,42 @@ app.use((req, res, next) => {
 app.set('views', path.join(__dirname, 'views'))
 app.set('view engine', 'pug')
 
+app.get('/', async (req, res) => {
+  const api = await initApi(req)
+  const home = await api.getSingle('home')
+  const preloader = await api.getSingle('preloader')
+  const meta = await api.getSingle('meta')
+  const navigation = await api.getSingle('navigation')
+  const collection = await api.query(
+    Prismic.Predicates.at('document.type', 'collection'),
+    {
+      fetchLinks: 'product.image',
+    },
+  )
+  const { results: collectionsResult } = collection
+
+  res.render('pages/home', {
+    collectionsResult,
+    home,
+    meta,
+    preloader,
+    navigation,
+  })
+})
+
 app.get('/about', async (req, res) => {
   const api = await initApi(req)
   const about = await api.getSingle('about')
   const preloader = await api.getSingle('preloader')
   const meta = await api.getSingle('meta')
+  const navigation = await api.getSingle('navigation')
 
   res.render('pages/about', {
     about,
     meta,
     preloader,
+    navigation,
   })
-})
-
-app.get('/', async (req, res) => {
-  res.render('pages/home')
 })
 
 app.get('/collection', async (req, res) => {
@@ -72,6 +95,7 @@ app.get('/collection', async (req, res) => {
   const preloader = await api.getSingle('preloader')
   console.log(preloader.data.title)
   const home = await api.getSingle('home')
+  const navigation = await api.getSingle('navigation')
   const collection = await api.query(
     Prismic.Predicates.at('document.type', 'collection'),
     {
@@ -86,6 +110,7 @@ app.get('/collection', async (req, res) => {
     home,
     meta,
     preloader,
+    navigation,
   })
 })
 
@@ -93,14 +118,19 @@ app.get('/detail/:uid', async (req, res) => {
   const api = await initApi(req)
   const meta = await api.getSingle('meta')
   const preloader = await api.getSingle('preloader')
-  const product = await api.getByUID('product', req.params.uid, {
-    fetchLinks: 'collection.title',
-  })
+  const product = await api.getByUID('product', req.params.uid)
+  const navigation = await api.getSingle('navigation')
+  const collection = await api.query(
+    Prismic.Predicates.at('document.type', 'collection'),
+  )
+  const { results: collectionsResult } = collection
 
   res.render('pages/detail', {
     meta,
     product,
     preloader,
+    navigation,
+    collectionsResult,
   })
 })
 
