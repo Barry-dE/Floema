@@ -12,8 +12,8 @@ html {
   // color: $color-quarter-spanish-white;
   font-size: calc(100vw / 1920 * 10);
   line-height: 1;
-  // overflow: hidden;
-  // position: fixed;
+  overflow: hidden;
+  position: fixed;
 }
 
 body {
@@ -21,19 +21,19 @@ body {
   @extend %description-18;
 
   font-family: $font-suisse-bp;
-  // position: fixed;
+  position: fixed;
 }
 
-// a {
-//   color: inherit;
-//   outline: none;
-//   text-decoration: none;
-// }
+a {
+  color: inherit;
+  outline: none;
+  text-decoration: none;
+}
 
 canvas {
   pointer-events: none;
   position: relative;
-  z-index: z("canvas");
+  z-index: z('canvas');
 }
 
 button {
@@ -58,9 +58,9 @@ button {
   @extend %cover;
 }
 
-[data-animation="label"],
-[data-animation="paragraph"],
-[data-animation="title"] {
+[data-animation='label'],
+[data-animation='paragraph'],
+[data-animation='title'] {
   span {
     display: inline-block;
     overflow: hidden;
@@ -68,7 +68,7 @@ button {
   }
 }
 
-[data-animation="button"] {
+[data-animation='button'] {
   display: inline-block;
   position: relative;
   white-space: nowrap;
@@ -80,7 +80,7 @@ button {
   }
 }
 
-[data-animation="link"] {
+[data-animation='link'] {
   display: inline-block;
   position: relative;
   white-space: nowrap;
