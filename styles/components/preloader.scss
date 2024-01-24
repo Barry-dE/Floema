@@ -6,6 +6,7 @@
   flex-direction: column;
   background-color: $color-contessa;
   color: $color-quarter-spanish-white;
+  display: none;
 }
 .preloader_text {
   @extend %title-53;
