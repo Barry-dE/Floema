@@ -1,6 +1,8 @@
 .detail {
   @extend %cover;
   @extend %center;
+  background-color: $color-quicksand;
+  color: $color-white;
 }
 .detail_wrapper {
   align-items: center;
@@ -12,12 +14,12 @@
   width: 55.4rem;
 }
 .detail_media_image {
-  border: 1px solid red;
   @extend %cover;
   object-fit: cover;
 }
 .detail_information {
   height: 100%;
+  padding-left: 8.2rem;
 }
 .detail_information_collection {
   @extend %description-12;
@@ -34,18 +36,22 @@
 }
 .detail_information_highlights {
   @extend %description-16;
-  margin-top: 5rem;
+  margin-top: 6rem;
 }
 
 .detail_information_highlight {
   align-items: center;
   display: flex;
+  &:not(:first-child) {
+    margin-top: 4rem;
+  }
 }
 .detail_information_highlight_icon {
   border: 1px solid red;
   height: 5rem;
   width: 5rem;
   border-radius: 10rem;
+  margin-right: 4rem;
 }
 
 .detail_information_highlight_text {
@@ -56,7 +62,6 @@
 }
 
 .detail_information-item {
-  align-items: cover;
   display: flex;
 
   &:not(:first-child) {
@@ -66,10 +71,15 @@
 
 .detail_information_item_title {
   @extend %title-12;
+  width: 10rem;
+  padding-right: 1rem;
 }
+
 .detail_information_item_description {
+  max-width: 44rem;
 }
 
 .detail_information_link {
   @extend %title-30;
+  display: inline-block;
 }
