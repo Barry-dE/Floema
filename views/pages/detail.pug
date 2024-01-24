@@ -21,7 +21,7 @@ block content
                                 svg.detail_information_highlight_icon
                                     use(xlink:href=`sprite-${highlight.highlight_icons.toLowerCase()}`)
 
-                                span.detail_information_highlight_text=highlight.highlight_text
+                                span.detail_information_highlight_text!=highlight.highlight_text.replace(/\n/g, "<br>")
 
                     .detail_information_list
                         each item in product.data.information
@@ -29,7 +29,7 @@ block content
                                 strong.detail_information_item_title=item.information_label
                                 span.detail_information_item_description=item.information_description
                     
-                a.detail_information_link(href=product.data.link_url.url target="_blank")=product.data.link_text
+                    a.detail_information_link(href=product.data.link_url.url target="_blank")=product.data.link_text
 
 
 
