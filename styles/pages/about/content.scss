@@ -1,4 +1,12 @@
 .about_content {
+  &:first-child {
+    margin-top: 0;
+  }
+  &:last-child {
+    margin-bottom: 0;
+  }
+  margin: 20rem 0;
+  position: relative;
 }
 .about_content_wrapper {
 }

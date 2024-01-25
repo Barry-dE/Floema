@@ -1,4 +1,10 @@
 .about_highlight {
+  &:first-child {
+    margin-top: 0;
+  }
+  &:last-child {
+    margin-bottom: 0;
+  }
 }
 .about_highlight_wrapper {
 }

@@ -1,9 +1,30 @@
 .about_gallery {
+  height: 58.6rem;
+  position: relative;
+
+  &:first-child {
+    margin-top: 0;
+  }
+  &:last-child {
+    margin-bottom: 0;
+  }
 }
 .about_gallery_wrapper {
+  align-items: center;
+  display: flex;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
 }
 
 .about_gallery_media {
+  height: 43.7rem;
+  margin: 0 2rem;
+  position: relative;
+  width: 30.9rem;
+  border: 1px solid red;
 }
 .about_gallery_media_image {
+  @extend %cover;
+  object-fit: cover;
 }

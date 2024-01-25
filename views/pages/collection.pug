@@ -8,7 +8,7 @@ block content
         .collections_wrapper
             .collections_titles
                 each collection, index in collectionsResult
-                    .collections_titles_label=`${home.data.collection} ${index === 0 ? "One": index === 1 ? "Two" : index === 2 ? "Three" : index === 3 ? "Four" : ""}`
+                    .collections_titles_label!=`${home.data.collection} <br> ${index === 0 ? "One": index === 1 ? "Two" : index === 2 ? "Three" : index === 3 ? "Four" : ""}`
                     .collections_titles_title=collection.data.title
 
 
@@ -23,7 +23,7 @@ block content
                                     img.collections_gallery_media_image(alt=product.products_product.data.image.alt src=product.products_product.data.image.url) 
 
             .collections_content
-                each collection in collectionsResult
-                    article.collections_article 
+                each collection, index  in collectionsResult
+                    article.collections_article(class=`${index === 0 ? "collections_article--active" : " "}`)
                         h2.collections_article_title=`${collection.data.title} ${home.data.collection}`
                         p.collections_article_description=collection.data.description

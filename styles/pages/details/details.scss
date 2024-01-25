@@ -21,6 +21,7 @@
   height: 100%;
   padding-left: 8.2rem;
 }
+
 .detail_information_collection {
   @extend %description-12;
   text-transform: uppercase;
@@ -47,7 +48,7 @@
   }
 }
 .detail_information_highlight_icon {
-  border: 1px solid red;
+  border: 1px solid currentColor;
   height: 5rem;
   width: 5rem;
   border-radius: 10rem;

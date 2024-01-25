@@ -12,8 +12,8 @@ html {
   // color: $color-quarter-spanish-white;
   font-size: calc(100vw / 1920 * 10);
   line-height: 1;
-  overflow: hidden;
-  position: fixed;
+  // overflow: hidden;
+  // position: fixed;
 }
 
 body {
@@ -21,7 +21,7 @@ body {
   @extend %description-18;
 
   font-family: $font-suisse-bp;
-  position: fixed;
+  // position: fixed;
 }
 
 a {
@@ -44,15 +44,15 @@ button {
   outline: none;
 }
 
-// img {
-//   opacity: 0;
-//   transition: opacity 0.4s ease;
-//   vertical-align: middle;
+img {
+  //   opacity: 0;
+  //   transition: opacity 0.4s ease;
+  vertical-align: middle;
 
-//   &.loaded {
-//     opacity: 1;
-//   }
-// }
+  //   &.loaded {
+  //     opacity: 1;
+  //   }
+}
 
 .content {
   @extend %cover;
