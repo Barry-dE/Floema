@@ -1,22 +1,44 @@
 .about_content {
+  display: flex;
+  justify-content: center;
+  margin: 20rem auto;
+  position: relative;
   &:first-child {
     margin-top: 0;
   }
   &:last-child {
     margin-bottom: 0;
   }
-  margin: 20rem 0;
-  position: relative;
 }
 .about_content_wrapper {
+  display: flex;
+
+  .about_content--right & {
+    flex-direction: row-reverse;
+  }
 }
 .about_content_label {
+  width: 18rem;
+  @extend %description-12;
+  text-transform: uppercase;
 }
 
+.about_content_box {
+  display: flex;
+}
 .about_content_description {
+  width: 36.2rem;
+
+  p:not(:first-child) & {
+    margin-top: 4rem;
+  }
 }
 
 .about_content_media {
 }
+
 .about_content_media_image {
+  margin-left: 17.8rem;
+  position: relative;
+  height: 60.8rem;
 }

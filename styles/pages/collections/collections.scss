@@ -1,4 +1,5 @@
 .collections {
+  overflow: hidden;
   @extend %cover;
   background-color: $color-quicksand;
   color: $color-quarter-spanish-white;
@@ -7,20 +8,11 @@
   @extend %cover;
 }
 .collections_titles {
-  display: flex;
-  left: 50%;
-  transform: translate(-50%, -50%) rotate(-90deg);
-  position: absolute;
-  top: 50%;
-  align-items: center;
+  @extend %vertical-titles;
 }
 
 .collections_titles_label {
-  transform: rotate(90deg);
-  text-align: center;
-  text-transform: uppercase;
-  position: relative;
-  bottom: -1.5rem;
+  @extend %vertical-titles__label;
 }
 .collections_titles_title {
   @extend %title-200;
