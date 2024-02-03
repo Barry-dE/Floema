@@ -1,9 +1,38 @@
 .home {
+  display: none;
   @extend %center;
   @extend %cover;
   background-color: $color-contessa;
   color: $color-quarter-spanish-white;
   text-align: center;
+  overflow: hidden;
+
+  &::after,
+  &::before {
+    content: '';
+    height: 24rem;
+    left: 0;
+    position: absolute;
+    width: 100%;
+    z-index: 1;
+  }
+
+  &::before {
+    background: linear-gradient(
+      to bottom,
+      $color-contessa 0%,
+      rgba($color-contessa, 0) 100%
+    );
+    top: 0;
+  }
+  &::after {
+    background: linear-gradient(
+      to top,
+      $color-contessa 0%,
+      rgba($color-contessa, 0) 100%
+    );
+    bottom: 0;
+  }
 }
 .home_wrapper {
 }
@@ -23,6 +52,21 @@
   position: absolute;
 }
 .home_gallery_media_image {
+  height: 55rem;
+  width: 44.7rem;
 }
 .home_Link {
+  align-items: center;
+  bottom: 9rem;
+  @extend %description-14;
+  letter-spacing: 0.05rem;
+  text-transform: uppercase;
+  display: flex;
+  height: 6rem;
+  justify-content: center;
+  left: 50%;
+  position: absolute;
+  transform: translateX(-50%);
+  width: 28.8rem;
+  z-index: 3;
 }
