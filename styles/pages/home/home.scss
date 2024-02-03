@@ -1,5 +1,4 @@
 .home {
-  display: none;
   @extend %center;
   @extend %cover;
   background-color: $color-contessa;
@@ -68,5 +67,9 @@
   position: absolute;
   transform: translateX(-50%);
   width: 28.8rem;
-  z-index: 3;
+  z-index: 2;
+}
+
+.home_link_icon {
+  @extend %cover;
 }
