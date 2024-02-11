@@ -3,15 +3,16 @@
   @extend %center;
   background-color: $color-quicksand;
   color: $color-white;
+  flex-direction: column;
 }
 .detail_wrapper {
   align-items: center;
   display: flex;
 }
 .detail_media {
-  height: 78.2rem;
+  height: 74.2rem;
   position: relative;
-  width: 55.4rem;
+  width: 53.4rem;
 }
 .detail_media_image {
   @extend %cover;
@@ -19,7 +20,7 @@
 }
 .detail_information {
   height: 100%;
-  padding-left: 8.2rem;
+  padding-left: 8rem;
 }
 
 .detail_information_collection {
@@ -83,4 +84,20 @@
 .detail_information_link {
   @extend %title-30;
   display: inline-block;
+}
+
+.detail_button {
+  width: 12rem;
+  height: 7rem;
+  display: flex;
+  justify-content: center;
+  position: relative;
+  // transform: translateX(-55%);
+  align-items: center;
+  font-size: 2rem;
+  z-index: 2;
+}
+
+.detail_button_icon {
+  @extend %cover;
 }

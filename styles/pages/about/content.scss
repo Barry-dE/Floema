@@ -25,11 +25,14 @@
 
 .about_content_box {
   display: flex;
+  &:not(:first-child) {
+    flex-direction: row-reverse;
+  }
 }
 .about_content_description {
   width: 36.2rem;
 
-  p:not(:first-child) & {
+  p:not(:first-child) {
     margin-top: 4rem;
   }
 }
