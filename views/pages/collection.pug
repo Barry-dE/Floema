@@ -20,7 +20,7 @@ block content
                         each product in collection.data.products
                             a.collections_gallery_link(href=Link(product.products_product))
                                 figure.collection_gallery_media
-                                    img.collections_gallery_media_image(alt=product.products_product.data.image.alt src=product.products_product.data.image.url) 
+                                    img.collections_gallery_media_image(alt=product.products_product.data.image.alt data-src=product.products_product.data.image.url) 
 
             .collections_content
                 each collection, index  in collectionsResult

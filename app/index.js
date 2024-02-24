@@ -1,3 +1,4 @@
+import Preloader from './components/preloader'
 import each from 'lodash/each'
 import About from 'pages/About'
 import Home from 'pages/Home'
@@ -14,6 +15,7 @@ class App {
 
   createPreloader() {
     this.preloader = new Preloader()
+    this.preloader.once('completed', this.onPreloaded.bind(this))
   }
 
   createContent() {
@@ -32,6 +34,10 @@ class App {
     this.page = this.pages[this.template]
     this.page.create()
     this.page.show()
+  }
+
+  onPreloaded() {
+    this.preloader.destroy()
   }
 
   async onChange(url) {
