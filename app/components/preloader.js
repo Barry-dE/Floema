@@ -26,6 +26,10 @@ export default class Preloader extends Component {
     })
 
     this.elements.titleSpans = this.elements.title.querySelectorAll('span span')
+    this.elements.numberText = this.elements.number.querySelector(
+      '.preloader_number_text',
+    )
+    console.log(this.elements)
     this.length = 0
 
     this.createLoader()
@@ -40,9 +44,8 @@ export default class Preloader extends Component {
 
   onAssetsLoaded(image) {
     this.length += 1
-    console.log((this.length / this.elements.images.length) * 100)
     const percent = this.length / this.elements.images.length
-    this.elements.number.innerHTML = `${Math.round(percent * 100)}%`
+    this.elements.numberText.innerHTML = `${Math.round(percent * 100)}%`
 
     if (percent === 1) {
       this.onLoaded()
@@ -70,12 +73,12 @@ export default class Preloader extends Component {
           ease: 'expo.out',
           y: '110%',
         },
-        '-=1.4',
+        '-=1',
       )
 
       this.animateOut.to(this.element, {
         scaleY: 0,
-        transformOrigin: '0 0',
+        transformOrigin: '100% 100%',
         ease: 'expo.out',
       })
 
