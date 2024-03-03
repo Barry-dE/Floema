@@ -1,6 +1,7 @@
 .collections {
   overflow: hidden;
-  @extend %cover;
+  // @extend %cover;
+  @extend %page;
   background-color: $color-quicksand;
   color: $color-quarter-spanish-white;
 }

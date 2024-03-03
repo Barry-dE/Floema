@@ -1,6 +1,7 @@
 .home {
   @extend %center;
-  @extend %cover;
+  @extend %page;
+  // @extend %cover;
   background-color: $color-contessa;
   color: $color-quarter-spanish-white;
   text-align: center;

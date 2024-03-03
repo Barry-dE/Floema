@@ -12,16 +12,15 @@ html {
   // color: $color-quarter-spanish-white;
   font-size: calc(100vw / 1920 * 10);
   line-height: 1;
-  // overflow: hidden;
-  // position: fixed;
+  overflow: hidden;
+  position: fixed;
 }
 
 body {
   @extend %cover;
   @extend %description-18;
-
   font-family: $font-suisse-bp;
-  // position: fixed;
+  position: fixed;
 }
 
 a {
