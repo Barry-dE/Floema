@@ -80,7 +80,10 @@ export default class Page {
   }
 
   onResize() {
-    this.scroll.limit = this.elements.wrapper.clientHeight - window.innerHeight
+    this.elements.wrapper
+      ? (this.scroll.limit =
+          this.elements.wrapper.clientHeight - window.innerHeight)
+      : null
   }
   onMouseWheel(event) {
     console.log(event)
