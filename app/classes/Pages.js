@@ -9,6 +9,15 @@ export default class Page {
     this.id = id
 
     this.transformPrefix = Prefix('transform')
+
+    this.scroll = {
+      current: 0,
+      target: 0,
+      last: 0,
+      limit: 0,
+    }
+
+    this.onMouseWheelEvent = this.onMouseWheel.bind(this)
   }
 
   create() {
@@ -16,6 +25,7 @@ export default class Page {
       current: 0,
       target: 0,
       last: 0,
+      limit: 0,
     }
     this.element = document.querySelector(this.selector)
     this.elements = {}
@@ -69,29 +79,43 @@ export default class Page {
     })
   }
 
+  onResize() {
+    this.scroll.limit = this.elements.wrapper.clientHeight - window.innerHeight
+  }
   onMouseWheel(event) {
     console.log(event)
     const { deltaY } = event
     this.scroll.target += deltaY
+    console.log(this.scroll.target, ':scroll target')
+    console.log(deltaY, ':delta')
   }
 
   update() {
-    console.log(this.scroll.target)
+    this.scroll.target = gsap.utils.clamp(
+      0,
+      this.scroll.limit,
+      this.scroll.target,
+    )
+
     this.scroll.current = gsap.utils.interpolate(
       this.scroll.current,
       this.scroll.target,
       0.1,
     )
 
-    this.elements.wrapper.style[this.transformPrefix] =
-      `translateY(-${this.scroll.current}px)`
+    this.scroll.current < 0.01 ? (this.scroll.current = 0) : null
+
+    if (this.elements.wrapper) {
+      this.elements.wrapper.style[this.transformPrefix] =
+        `translateY(-${this.scroll.current}px)`
+    }
   }
 
   addEventListeners() {
-    window.addEventListener('mousewheel', this.onMouseWheel)
+    window.addEventListener('mousewheel', this.onMouseWheelEvent)
   }
 
   removeEventListeners() {
-    window.addEventListener('mousewheel', this.onMouseWheel)
+    window.addEventListener('mousewheel', this.onMouseWheelEvent)
   }
 }

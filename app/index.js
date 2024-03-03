@@ -12,6 +12,7 @@ class App {
     this.createPages()
     this.addLinkListeners()
     this.update()
+    this.addListeners()
   }
 
   createPreloader() {
@@ -38,6 +39,7 @@ class App {
 
   onPreloaded() {
     this.preloader.destroy()
+    this.onResize()
     this.page.show()
   }
 
@@ -57,6 +59,7 @@ class App {
 
       this.page = this.pages[this.template]
       this.page.create()
+
       this.page.show()
       this.addLinkListeners()
     } else {
@@ -64,9 +67,18 @@ class App {
     }
   }
 
+  onResize() {
+    this.page && this.page.onResize ? this.page.onResize() : null
+  }
+
   update() {
     this.page && this.page.update ? this.page.update() : null
+
     window.requestAnimationFrame(this.update.bind(this))
+  }
+
+  addListeners() {
+    window.addEventListener('resize', this.onResize.bind(this))
   }
 
   addLinkListeners() {
