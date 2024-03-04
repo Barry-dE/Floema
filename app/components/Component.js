@@ -5,6 +5,7 @@ export default class Component extends EventEmitter {
   constructor({ element, elements }) {
     super()
     this.selector = element
+    console.log(this.selector)
     this.childSelector = { ...elements }
 
     this.create()
@@ -12,7 +13,15 @@ export default class Component extends EventEmitter {
   }
 
   create() {
-    this.element = document.querySelector(this.selector)
+    if (this.selector instanceof window.HTMLElement) {
+      this.element = this.selector
+    } else if (typeof this.selector === 'object') {
+      this.element = document.querySelector(
+        '.' + this.selector.element.className,
+      )
+    } else {
+      this.element = document.querySelector(this.selector)
+    }
     this.elements = {}
     each(this.childSelector, (entry, key) => {
       if (

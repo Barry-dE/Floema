@@ -1,11 +1,17 @@
 import each from 'lodash/each'
+import map from 'lodash/map'
+import normalizeWheel from 'normalize-wheel'
 import gsap from 'gsap'
 import Prefix from 'prefix'
+import Title from '../animations/Title'
 
 export default class Page {
   constructor({ element, elements, id }) {
     this.selector = element
-    this.childSelector = { ...elements }
+    this.childSelector = {
+      ...elements,
+      animatesTitles: '[data-animation="title"]',
+    }
     this.id = id
 
     this.transformPrefix = Prefix('transform')
@@ -45,6 +51,14 @@ export default class Page {
           this.elements[key] = document.querySelector(entry)
         }
       }
+    })
+
+    this.createAnimations()
+  }
+
+  createAnimations() {
+    this.animatesTitles = map(this.elements.animatesTitles, (element) => {
+      return new Title({ element })
     })
   }
 
@@ -86,11 +100,8 @@ export default class Page {
       : null
   }
   onMouseWheel(event) {
-    console.log(event)
-    const { deltaY } = event
-    this.scroll.target += deltaY
-    console.log(this.scroll.target, ':scroll target')
-    console.log(deltaY, ':delta')
+    const { pixelY } = normalizeWheel(event)
+    this.scroll.target += pixelY
   }
 
   update() {

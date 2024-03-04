@@ -14,7 +14,7 @@ block content
 
             each section in about.data.body
                 if section.slice_type === 'title'
-                    h2.about_title=section.primary.text
+                    h2.about_title(data-animation="title")=section.primary.text
 
                 if section.slice_type === 'content'
                     section.about_content(class=`${section.primary.type === 'left' ? 'about_content--left' : 'about_content--right'}`)
@@ -33,7 +33,7 @@ block content
                             if section.primary.label
                                 p.about_highlight_label=section.primary.label
 
-                                h3.about_highlight_title=section.primary.title
+                                h3.about_highlight_title(data-animation="title")=section.primary.title
                             .about_highlight_medias
                                 each media in section.items
                                     figure.about_highlight_media
