@@ -1,5 +1,6 @@
 import gsap from 'gsap'
 import { each } from 'lodash'
+import { resolve } from 'path-browserify'
 export default class Page {
     constructor({ id, element, elements }) {
         this.selector = element
@@ -36,14 +37,21 @@ export default class Page {
 
     // show page
     show() {
-        gsap.from(this.element, {
-            autoAlpha: 0,
-            delay: 4,
+        return Promise((resolve) => {
+            gsap.from(this.element, {
+                autoAlpha: 0,
+                onComplete: resolve,
+            })
         })
     }
 
     // hide page
     hide() {
-        gsap.to(this.element, { autoAlpha: 0 })
+        return Promise((resolve) => {
+            gsap.to(this.element, {
+                autoAlpha: 0,
+                onComplete: resolve,
+            })
+        })
     }
 }

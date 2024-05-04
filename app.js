@@ -17,10 +17,10 @@ app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(methodOverride())
 const initApi = (req) => {
-  return Prismic.getApi(process.env.PRISMIC_ENDPOINT, {
-    accessToken: process.env.PRISMIC_ACCESS_TOKEN,
-    req,
-  })
+    return Prismic.getApi(process.env.PRISMIC_ENDPOINT, {
+        accessToken: process.env.PRISMIC_ACCESS_TOKEN,
+        req,
+    })
 }
 
 // if(process.env.NODE_ENV === 'development'){
@@ -28,116 +28,112 @@ const initApi = (req) => {
 // }
 
 const handleLinkResolver = (doc) => {
- 
-  if (doc === 'product') {
-    return `/detail/${doc.slug}`
-  }
+    if (doc === 'product') {
+        return `/detail/${doc.slug}`
+    }
 
-  if (doc === 'collections') {
-    return '/collection'
-  }
+    if (doc === 'collections') {
+        return '/collection'
+    }
 
-  if (doc === 'about') {
-    return '/about'
-  }
+    if (doc === 'about') {
+        return '/about'
+    }
 
-  return '/'
+    return '/'
 }
 
-
-
 app.use((req, res, next) => {
-  res.locals.Link = handleLinkResolver
-  res.locals.PrismicDOM = PrismicDOM
-  next()
+    res.locals.Link = handleLinkResolver
+    res.locals.PrismicDOM = PrismicDOM
+    next()
 })
 
 app.set('views', path.join(__dirname, 'views'))
 app.set('view engine', 'pug')
 
 app.get('/', async (req, res) => {
-  const api = await initApi(req)
-  const home = await api.getSingle('home')
-  const preloader = await api.getSingle('preloader')
-  const meta = await api.getSingle('meta')
-  const navigation = await api.getSingle('navigation')
-  const collection = await api.query(
-    Prismic.Predicates.at('document.type', 'collection'),
-    {
-      fetchLinks: 'product.image',
-    },
-  )
-  const { results: collectionsResult } = collection
+    const api = await initApi(req)
+    const home = await api.getSingle('home')
+    const preloader = await api.getSingle('preloader')
+    const meta = await api.getSingle('meta')
+    const navigation = await api.getSingle('navigation')
+    const collection = await api.query(
+        Prismic.Predicates.at('document.type', 'collection'),
+        {
+            fetchLinks: 'product.image',
+        },
+    )
+    const { results: collectionsResult } = collection
 
-  res.render('pages/home', {
-    collectionsResult,
-    home,
-    meta,
-    preloader,
-    navigation,
-  })
-  console.log(home)
+    res.render('pages/home', {
+        collectionsResult,
+        home,
+        meta,
+        preloader,
+        navigation,
+    })
 })
 
 app.get('/about', async (req, res) => {
-  const api = await initApi(req)
-  const about = await api.getSingle('about')
-  const preloader = await api.getSingle('preloader')
-  const meta = await api.getSingle('meta')
-  const navigation = await api.getSingle('navigation')
+    const api = await initApi(req)
+    const about = await api.getSingle('about')
+    const preloader = await api.getSingle('preloader')
+    const meta = await api.getSingle('meta')
+    const navigation = await api.getSingle('navigation')
 
-  res.render('pages/about', {
-    about,
-    meta,
-    preloader,
-    navigation,
-  })
+    res.render('pages/about', {
+        about,
+        meta,
+        preloader,
+        navigation,
+    })
 })
 
 app.get('/collection', async (req, res) => {
-  const api = await initApi(req)
-  const meta = await api.getSingle('meta')
-  const preloader = await api.getSingle('preloader')
-  
-  const home = await api.getSingle('home')
-  const navigation = await api.getSingle('navigation')
-  const collection = await api.query(
-    Prismic.Predicates.at('document.type', 'collection'),
-    {
-      fetchLinks: 'product.image',
-    },
-  )
-  const { results: collectionsResult } = collection
-  
-  res.render('pages/collection', {
-    collectionsResult,
-    home,
-    meta,
-    preloader,
-    navigation,
-  })
+    const api = await initApi(req)
+    const meta = await api.getSingle('meta')
+    const preloader = await api.getSingle('preloader')
+
+    const home = await api.getSingle('home')
+    const navigation = await api.getSingle('navigation')
+    const collection = await api.query(
+        Prismic.Predicates.at('document.type', 'collection'),
+        {
+            fetchLinks: 'product.image',
+        },
+    )
+    const { results: collectionsResult } = collection
+
+    res.render('pages/collection', {
+        collectionsResult,
+        home,
+        meta,
+        preloader,
+        navigation,
+    })
 })
 
 app.get('/detail/:uid', async (req, res) => {
-  const api = await initApi(req)
-  const meta = await api.getSingle('meta')
-  const preloader = await api.getSingle('preloader')
-  const product = await api.getByUID('product', req.params.uid)
-  const navigation = await api.getSingle('navigation')
-  const collection = await api.query(
-    Prismic.Predicates.at('document.type', 'collection'),
-  )
-  const { results: collectionsResult } = collection
+    const api = await initApi(req)
+    const meta = await api.getSingle('meta')
+    const preloader = await api.getSingle('preloader')
+    const product = await api.getByUID('product', req.params.uid)
+    const navigation = await api.getSingle('navigation')
+    const collection = await api.query(
+        Prismic.Predicates.at('document.type', 'collection'),
+    )
+    const { results: collectionsResult } = collection
 
-  res.render('pages/detail', {
-    meta,
-    product,
-    preloader,
-    navigation,
-    collectionsResult,
-  })
+    res.render('pages/detail', {
+        meta,
+        product,
+        preloader,
+        navigation,
+        collectionsResult,
+    })
 })
 
 app.listen(port, () => {
-  console.log(`Example app listening at http://localhost:${port}`)
+    console.log(`Example app listening at http://localhost:${port}`)
 })
