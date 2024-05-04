@@ -1,12 +1,12 @@
 .preloader {
-  @extend %cover;
-  display: flex;
+  // @extend %cover;
+  display: none;
   align-items: center;
   justify-content: center;
   flex-direction: column;
-  background-color: $color-contessa;
+  // background-color: $color-contessa;
   color: $color-quarter-spanish-white;
-  z-index: z('preloader');
+  // z-index: z('preloader');
 }
 .preloader_text {
   //

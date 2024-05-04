@@ -1,6 +1,7 @@
 const path = require("path");
 const webpack = require("webpack");
 
+
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 const CopyWebpackPlugin = require("copy-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
@@ -16,14 +17,22 @@ const dirNode = "node_modules";
 
 module.exports = {
   entry: [path.join(dirApp, "index.js"), path.join(dirStyles, "index.scss")],
-
+  // target: 'node', // Set target to Node.js environment
+  
   resolve: {
     modules: [dirApp, dirShared, dirStyles, dirNode],
+    fallback: {
+      fs: false, // or require.resolve("path-browserify")
+      path: require.resolve("path-browserify"),
+      util: require.resolve("util/")
+  }
   },
 
   plugins: [
-    new webpack.DefinePlugin({
+    new webpack.ProvidePlugin({
       IS_DEVELOPMENT,
+      // 'process.env.NODE_ENV': JSON.stringify('production'), // or 'development' as per your environment
+      process: 'process/browser'
     }),
 
     new CopyWebpackPlugin({

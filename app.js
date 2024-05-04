@@ -1,7 +1,7 @@
 require('dotenv').config()
 const express = require('express')
 const app = express()
-const errorHandler = require('errorhandler')
+// const errorHandler = require('errorhandler')
 const path = require('path')
 const port = 5173
 
@@ -23,8 +23,12 @@ const initApi = (req) => {
   })
 }
 
+// if(process.env.NODE_ENV === 'development'){
+//   app.use(errorHandler())
+// }
+
 const handleLinkResolver = (doc) => {
-  console.log(doc)
+ 
   if (doc === 'product') {
     return `/detail/${doc.slug}`
   }
@@ -40,7 +44,7 @@ const handleLinkResolver = (doc) => {
   return '/'
 }
 
-app.use(errorHandler())
+
 
 app.use((req, res, next) => {
   res.locals.Link = handleLinkResolver
@@ -72,6 +76,7 @@ app.get('/', async (req, res) => {
     preloader,
     navigation,
   })
+  console.log(home)
 })
 
 app.get('/about', async (req, res) => {
@@ -93,7 +98,7 @@ app.get('/collection', async (req, res) => {
   const api = await initApi(req)
   const meta = await api.getSingle('meta')
   const preloader = await api.getSingle('preloader')
-  console.log(preloader.data.title)
+  
   const home = await api.getSingle('home')
   const navigation = await api.getSingle('navigation')
   const collection = await api.query(
@@ -103,8 +108,7 @@ app.get('/collection', async (req, res) => {
     },
   )
   const { results: collectionsResult } = collection
-  console.log(home.data.collection)
-
+  
   res.render('pages/collection', {
     collectionsResult,
     home,

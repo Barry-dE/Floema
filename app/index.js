@@ -1,98 +1,66 @@
-import Preloader from './components/preloader'
-import each from 'lodash/each'
-import About from 'pages/About'
-import Home from 'pages/Home'
-import Detail from 'pages/Detail'
-import Collections from 'pages/Collections'
-
+import About from './pages/About'
+import Detail from './pages/Detail'
+import Collections from './pages/Collections'
+import Home from './pages/Home'
+import { each } from 'lodash'
 class App {
-  constructor() {
-    this.createPreloader()
-    this.createContent()
-    this.createPages()
-    this.addLinkListeners()
-    this.update()
-    this.addListeners()
-  }
-
-  createPreloader() {
-    this.preloader = new Preloader()
-    this.preloader.once('completed', this.onPreloaded.bind(this))
-  }
-
-  createContent() {
-    this.content = document.querySelector('.content')
-    this.template = this.content.getAttribute('data-template')
-  }
-
-  createPages() {
-    this.pages = {
-      about: new About(),
-      collections: new Collections(),
-      detail: new Detail(),
-      home: new Home(),
+    constructor() {
+        this.createContent()
+        this.createPages()
+        this.addLinkListeners()
     }
 
-    this.page = this.pages[this.template]
-    this.page.create()
-  }
+    // 1. Create the pages
+    createPages() {
+        this.pages = {
+            about: new About(),
+            collection: new Collections(),
+            detail: new Detail(),
+            home: new Home(),
+        }
 
-  onPreloaded() {
-    this.preloader.destroy()
-    this.onResize()
-    this.page.show()
-  }
-
-  async onChange(url) {
-    await this.page.hide()
-    const request = await window.fetch(url)
-    if (request.status === 200) {
-      const html = await request.text()
-      const div = document.createElement('div')
-      div.innerHTML = html
-
-      const divContent = div.querySelector('.content')
-      this.template = divContent.getAttribute('data-template')
-
-      this.content.setAttribute('data-template', this.template)
-      this.content.innerHTML = divContent.innerHTML
-
-      this.page = this.pages[this.template]
-      this.page.create()
-
-      this.page.show()
-      this.addLinkListeners()
-    } else {
-      console.log('Error')
+        // set the current page
+        this.page = this.pages[this.template]
+        this.page.create()
+        this.page.show()
     }
-  }
 
-  onResize() {
-    this.page && this.page.onResize ? this.page.onResize() : null
-  }
+    // 2. initialize about and home page when you are in the about page and homepage
+    createContent() {
+        this.content = document.querySelector('.content')
+        this.template = this.content.getAttribute('data-template')
+    }
 
-  update() {
-    this.page && this.page.update ? this.page.update() : null
+    // select all the links on the website and listen for click event
+    addLinkListeners() {
+        const links = document.querySelectorAll('a')
+        each(links, (link) => {
+            link.onclick = (event) => {
+                event.preventDefault()
+                const { href } = link
 
-    window.requestAnimationFrame(this.update.bind(this))
-  }
+                // get the clicked link to load the clicked page
+                this.onChange(href)
+            }
+        })
+    }
 
-  addListeners() {
-    window.addEventListener('resize', this.onResize.bind(this))
-  }
+    // fetch and render the clicked page without refreshing the browser
+    async onChange(url) {
+        const request = await window.fetch(url)
 
-  addLinkListeners() {
-    const links = document.querySelectorAll('a')
+        if (request.status === 200) {
+            const html = await request.text()
+            const div = document.createElement('div')
+            div.innerHTML = html
 
-    each(links, (link) => {
-      link.onclick = (e) => {
-        // e.preventDefault()
-        const { href } = link
+            const divContent = div.querySelector('.content')
 
-        this.onChange(href)
-      }
-    })
-  }
+            this.content.innerHTML = divContent.innerHTML
+        } else {
+            console.log('Error')
+        }
+    }
 }
 
 new App()
