@@ -9,4 +9,8 @@ export default class About extends Page{
         }})
           
     }
+
+    addEventListeners(){
+        
+    }
 }

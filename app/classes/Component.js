@@ -1,13 +1,19 @@
 import gsap from 'gsap'
 import { each } from 'lodash'
-import { resolve } from 'path-browserify'
-export default class Page {
-    constructor({ id, element, elements }) {
+import EventEmitter from 'events'
+export default class Component extends EventEmitter {
+    constructor({ element, elements }) {
+        // The EventEmitter class enables inter-object communication, allowing one object to notify others of changes or updates.
+        // In this scenario, the preloader class listens for an event indicating that all images on the page have loaded,
+        // allowing it to hide the preloader once the images are ready.
+        super()
         this.selector = element
         this.selectorChildren = {
             ...elements,
         }
-        this.id = id
+
+        this.create()
+        this.addEventListeners()
     }
 
     create() {
@@ -29,35 +35,13 @@ export default class Page {
                 } else if (this.elements[key].length === 1) {
                     this.elements[key] = document.querySelector(entry)
                 }
-
-                console.log(this.elements[key], entry)
             }
         })
     }
 
     // show page
-    show() {
-        return new Promise((resolve) => {
-            gsap.fromTo(
-                this.element,
-                {
-                    autoAlpha: 0,
-                },
-                {
-                    autoAlpha: 1,
-                    onComplete: resolve,
-                },
-            )
-        })
-    }
+    addEventListeners() {}
 
     // hide page
-    hide() {
-        return new Promise((resolve) => {
-            gsap.to(this.element, {
-                autoAlpha: 0,
-                onComplete: resolve,
-            })
-        })
-    }
+    removeEventListeners() {}
 }

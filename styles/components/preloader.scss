@@ -1,35 +1,43 @@
 .preloader {
-  // @extend %cover;
-  display: none;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-  // background-color: $color-contessa;
-  color: $color-quarter-spanish-white;
-  // z-index: z('preloader');
+    @extend %cover;
+    @extend %center;
+    border: 1px solid green;
+    // display: none;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    background-color: $color-contessa;
+    color: $color-quarter-spanish-white;
+    z-index: z('preloader');
 }
 .preloader_text {
-  //
-  max-width: 66rem;
-  text-align: center;
-  span {
-    display: inline-block;
-    overflow: hidden;
-  }
+    max-width: 66rem;
+    text-align: center;
+    font-size: 0;
 
-  span span {
-    @extend %title-53;
-  }
+    // set the split span to inline block so they can be translated
+    span {
+        display: inline-block;
+        overflow: hidden;
+    }
+
+    span span {
+        @extend %title-53;
+    }
 }
 
 .preloader_number {
-  position: absolute;
-  bottom: 7.3rem;
-  overflow: hidden;
-  transform: translate(-50%, -50%);
-  @extend %description-14;
+    position: absolute;
+    bottom: 7.3rem;
+    overflow: hidden;
+    transform: translate(-50%, -50%);
+    @extend %description-14;
+
+    @include media('<phone') {
+        font-size: 2.4rem;
+    }
 }
 
 .preloader_number_text {
-  display: inline-block;
+    display: inline-block;
 }
