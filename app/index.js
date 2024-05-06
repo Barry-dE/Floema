@@ -10,6 +10,8 @@ class App {
         this.createContent()
         this.createPages()
         this.addLinkListeners()
+        this.update() //gets called over and over in each animation frame of the browser (requestAnimationFrame)
+        this.addEventListeners() //calls the onResize method
     }
 
     // 1. Create the pages
@@ -26,10 +28,12 @@ class App {
         this.page.create()
     }
 
+    // 7. create preloader and listen for image loading completion
     createPreloader() {
         this.preloader = new Preloader()
         this.preloader.once('completed', this.onPreloaded.bind(this))
     }
+
     // 2. initialize about and home page when you are in the about page and homepage
     createContent() {
         this.content = document.querySelector('.content')
@@ -39,7 +43,22 @@ class App {
     //6. destroy the current preloader after the assest loading have been completed
     onPreloaded() {
         this.preloader.destroy() // destroy preloader
+        this.onResize()
         this.page.show() //show page
+    }
+
+    // 8. requestAnimationframe (smooth scroll)
+    update() {
+        if (this.page && this.page.update) {
+            this.page.update()
+        }
+
+        this.frame = window.requestAnimationFrame(this.update.bind(this))
+    }
+
+    // limit page smooth scroll to the height of the wrapper
+    addEventListeners() {
+        window.addEventListener('resize', this.onResize.bind(this))
     }
 
     //  4. select all the links on the website and listen for click event
@@ -75,11 +94,19 @@ class App {
             this.content.innerHTML = divContent.innerHTML
 
             this.page = this.pages[this.template]
+            this.onResize()
             this.page.create()
             this.page.show()
             this.addLinkListeners()
         } else {
             console.log('Error')
+        }
+    }
+
+    //resize current page if it has the onResize method
+    onResize() {
+        if (this.page && this.page.onResize) {
+            this.page.onResize()
         }
     }
 }
