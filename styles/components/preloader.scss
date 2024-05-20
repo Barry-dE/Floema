@@ -1,19 +1,21 @@
 .preloader {
     @extend %cover;
     @extend %center;
+    position: fixed;
     border: 1px solid green;
-    // display: none;
-    align-items: center;
-    justify-content: center;
     flex-direction: column;
     background-color: $color-contessa;
     color: $color-quarter-spanish-white;
     z-index: z('preloader');
+    display: none;
 }
-.preloader_text {
-    max-width: 66rem;
+
+.preloader__text {
+    max-width: 68rem;
     text-align: center;
-    font-size: 0;
+    @extend %title-53;
+    border: 1px solid red;
+    // white-space: nowrap;
 
     // set the split span to inline block so they can be translated
     span {
@@ -26,7 +28,7 @@
     }
 }
 
-.preloader_number {
+.preloader__number {
     position: absolute;
     bottom: 7.3rem;
     overflow: hidden;
@@ -38,6 +40,90 @@
     }
 }
 
-.preloader_number_text {
+.preloader__number__text {
     display: inline-block;
 }
+
+// .preloader {
+//     @extend %center;
+//     @extend %cover;
+
+//     background: $color-contessa;
+//     color: $color-quarter-spanish-white;
+//     text-align: center;
+//     z-index: z('preloader');
+// }
+
+// .preloader__text {
+//     @extend %title-53;
+
+//     max-width: 67rem;
+//     opacity: 0;
+
+//     span span {
+//         @extend %title-53;
+
+//         display: inline-block;
+//         transform-origin: center center 0.5em;
+//     }
+// }
+
+// .preloader__number {
+//     @extend %description-14;
+
+//     bottom: 7.3rem;
+//     left: 50%;
+//     overflow: hidden;
+//     position: absolute;
+//     transform: translateX(-50%);
+
+//     @include media('<phone') {
+//         font-size: 2.4rem;
+//     }
+// }
+
+// .preloader__number__text {
+//     display: inline-block;
+// }
+
+// .preloader {
+//     @extend %center;
+//     @extend %cover;
+
+//     background: $color-contessa;
+//     color: $color-quarter-spanish-white;
+//     text-align: center;
+//     z-index: z('preloader');
+// }
+
+// .preloader__text {
+//     @extend %title-53;
+
+//     max-width: 67rem;
+//     opacity: 0;
+
+//     span span {
+//         @extend %title-53;
+
+//         display: inline-block;
+//         transform-origin: center center 0.5em;
+//     }
+// }
+
+// .preloader__number {
+//     @extend %description-14;
+
+//     bottom: 7.3rem;
+//     left: 50%;
+//     overflow: hidden;
+//     position: absolute;
+//     transform: translateX(-50%);
+
+//     @include media('<phone') {
+//         font-size: 2.4rem;
+//     }
+// }
+
+// .preloader__number__text {
+//     display: inline-block;
+// }

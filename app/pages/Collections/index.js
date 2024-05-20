@@ -1,8 +1,8 @@
-import Page from "../../classes/Pages";
+import Page from '../../classes/Pages'
 
-
-export default class Collections extends Page{
-    constructor(){
-        super({id: "collections", element:".collections"})   
+export default class Collections extends Page {
+    constructor() {
+        super({ id: 'collections', element: '.collections' })
+        console.log('collections')
     }
 }

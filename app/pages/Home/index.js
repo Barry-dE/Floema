@@ -10,6 +10,7 @@ export default class Home extends Page {
                 naviagtion: document.querySelector('.navigation'),
             },
         })
+        console.log('home')
     }
 
     addEventListeners() {}

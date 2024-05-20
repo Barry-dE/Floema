@@ -1,3 +1,4 @@
+import { log } from 'util'
 import Page from '../../classes/Pages'
 
 export default class About extends Page {
@@ -11,5 +12,7 @@ export default class About extends Page {
                 navigation: document.querySelector('.navigation'),
             },
         })
+
+        console.log('About')
     }
 }

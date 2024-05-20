@@ -1,6 +1,7 @@
 .home {
     @extend %center;
     @extend %page;
+    // display: none;
     // @extend %cover;
     background-color: $color-contessa;
     color: $color-quarter-spanish-white;
@@ -34,28 +35,29 @@
         bottom: 0;
     }
 }
-.home_wrapper {
+.home__wrapper {
 }
-.home_titles {
+.home__titles {
     @extend %vertical-titles;
 }
-.home_titles_label {
+.home__titles__label {
     @extend %vertical-titles__label;
 }
-.home_titles_title {
+.home__titles__title {
     @extend %vertical-titles__title;
 }
-.home_gallery {
+.home__gallery {
     @extend %cover;
 }
-.home_gallery_media {
+.home__gallery__media {
     position: absolute;
+    border: 1px solid red;
 }
-.home_gallery_media_image {
+.home__gallery__media__image {
     height: 55rem;
     width: 44.7rem;
 }
-.home_link {
+.home__link {
     align-items: center;
     bottom: 9rem;
     @extend %description-14;
@@ -71,6 +73,6 @@
     z-index: 2;
 }
 
-.home_link_icon {
+.home__link__icon {
     @extend %cover;
 }

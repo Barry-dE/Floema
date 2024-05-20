@@ -1,70 +1,60 @@
 %vertical-titles {
-  // left: 50%;
-  // position: absolute;
-  // top: 0;
-  // transform: translateX(-50%);
-  display: flex;
-  left: 50%;
-  transform: translate(-50%, -50%) rotate(-90deg);
-  position: absolute;
-  top: 50%;
-  align-items: center;
+    display: flex;
+    left: 50%;
+    transform: translate(-50%, -50%) rotate(-90deg);
+    position: absolute;
+    top: 50%;
+    align-items: center;
 }
 
 %vertical-titles__item {
 }
 
 %vertical-titles__label {
-  transform: rotate(90deg);
-  text-align: center;
-  text-transform: uppercase;
-  position: relative;
-  bottom: -1.5rem;
-  // @extend %description-12;
-
-  // height: 16rem;
-  // letter-spacing: 0.1rem;
-  // position: relative;
-  // text-align: center;
-  // text-transform: uppercase;
+    transform: rotate(90deg);
+    text-align: center;
+    text-transform: uppercase;
+    position: relative;
+    bottom: -1.5rem;
+    // @extend %description-12;
 }
 
 %vertical-titles__label__text {
-  display: inline-block;
-  left: 50%;
-  position: absolute;
-  top: 50%;
-  transform: translate(-50%, -50%) rotate(-90deg);
-  width: 10rem;
+    display: inline-block;
+    left: 50%;
+    position: absolute;
+    top: 50%;
+    transform: translate(-50%, -50%) rotate(-90deg);
+    width: 10rem;
 }
 
 %vertical-titles__title {
-  @extend %title-200;
+    @extend %title-200;
 
-  position: relative;
+    position: relative;
 
-  &:nth-child(2) {
-    height: 28.6rem;
-  }
+    // &:nth-child(2) {
+    //     height: 28.6rem;
+    // }
 
-  &:nth-child(4) {
-    height: 45.1rem;
-  }
+    // &:nth-child(4) {
+    //     height: 45.1rem;
+    // }
 
-  &:nth-child(6) {
-    height: 53.1rem;
-  }
+    // &:nth-child(6) {
+    //     height: 53.1rem;
+    // }
 
-  &:nth-child(8) {
-    height: 28.8rem;
-  }
+    // &:nth-child(8) {
+    //     height: 28.8rem;
+    // }
 }
 
 %vertical-titles__title__text {
-  display: inline-block;
-  left: 50%;
-  position: absolute;
-  top: 50%;
-  transform: translate(-50%, -50%) rotate(-90deg);
-  white-space: nowrap;
+    display: inline-block;
+    left: 50%;
+    position: absolute;
+    top: 50%;
+    transform: translate(-50%, -50%) rotate(-90deg);
+    white-space: nowrap;
 }
