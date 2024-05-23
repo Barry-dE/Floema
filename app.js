@@ -3,6 +3,7 @@ require('dotenv').config()
 const express = require('express')
 const path = require('path-browserify')
 const app = express()
+const errorHandler = require('errorhandler')
 const port = 5173
 
 const Prismic = require('@prismicio/client')
@@ -21,15 +22,17 @@ const handleLinkResolver = () => {
 
 // Middleware
 app.use((req, res, next) => {
-    res.locals.ctx = {
-        endpoint: process.env.PRISMIC_ENDPOINT,
-        linkResolver: handleLinkResolver,
-    }
-
+    // res.locals.ctx = {
+    //     endpoint: process.env.PRISMIC_ENDPOINT,
+    //     linkResolver: handleLinkResolver,
+    // }
+    res.locals.Links = handleLinkResolver
     res.locals.PrismicDom = PrismicDom
 
     next()
 })
+
+app.use(errorHandler())
 
 //connect to the prismic API
 function initApi(req) {
@@ -39,55 +42,83 @@ function initApi(req) {
     })
 }
 
-app.get('/', (req, res) => {
-    res.render('pages/home')
+app.get('/', async (req, res) => {
+    const api = await initApi(req)
+    const home = await api.getSingle('home')
+    const preloader = await api.getSingle('preloader')
+    const meta = await api.getSingle('meta')
+    const navigation = await api.getSingle('navigation')
+    const collection = await api.query(
+        Prismic.Predicates.at('document.type', 'collection'),
+        {
+            fetchLinks: 'product.image',
+        },
+    )
+    const { results: collectionsResult } = collection
+
+    res.render('pages/home', {
+        collectionsResult,
+        home,
+        meta,
+        preloader,
+        navigation,
+    })
 })
 
-app.get('/about', (req, res) => {
-    initApi(req)
-        .then((api) => {
-            return api.query(
-                Prismic.Predicates.any('document.type', ['meta', 'about']),
-            )
-        })
-        .then((response) => {
-            const { results } = response
-            const [meta, about] = results
+app.get('/about', async (req, res) => {
+    const api = await initApi(req)
+    const about = await api.getSingle('about')
+    const preloader = await api.getSingle('preloader')
+    const meta = await api.getSingle('meta')
+    const navigation = await api.getSingle('navigation')
 
-            each(about.data.body, (item) => {
-                console.log(item)
-            })
-
-            res.render('pages/about', { about, meta, descriptions })
-        })
-        .catch((err) => {
-            console.error(err)
-            res.status(500).send('Error querying Prismic API')
-        })
+    res.render('pages/about', {
+        about,
+        meta,
+        preloader,
+        navigation,
+    })
 })
 
-app.get('/detail/:id', (req, res) => {
-    initApi(req)
-        .then((api) => {
-            return api.query(
-                Prismic.Predicates.any('document.type', ['meta', 'about']),
-            )
-        })
-        .then((response) => {
-            const { results } = response
-            const [meta, about] = results
-            res.render('pages/about', { about, meta })
-        })
-        .catch((err) => {
-            console.error(err)
-            res.status(500).send('Error querying Prismic API')
-        })
+app.get('/detail/:uid', async (req, res) => {
+    const api = await initApi(req)
+    const meta = await api.getSingle('meta')
+    const preloader = await api.getSingle('preloader')
+    const product = await api.getByUID('product', req.params.uid)
+    const navigation = await api.getSingle('navigation')
+    const collection = await api.query(
+        Prismic.Predicates.at('document.type', 'collection'),
+    )
+    const { results: collectionsResult } = collection
 
-    res.render('pages/detail')
+    res.render('pages/detail', {
+        meta,
+        product,
+        preloader,
+        navigation,
+        collectionsResult,
+    })
 })
 
-app.get('/collections', (req, res) => {
-    res.render('pages/collections')
+app.get('/collections', async (req, res) => {
+    const api = await initApi(req)
+    const meta = await api.getSingle('meta')
+    const preloader = await api.getSingle('preloader')
+
+    const home = await api.getSingle('home')
+    const navigation = await api.getSingle('navigation')
+    const { results: collections } = await api.query(
+        Prismic.Predicates.at('document.type', 'collection'),
+        { fetchLinks: 'product.image' },
+    )
+
+    res.render('pages/collections', {
+        meta,
+        collections,
+        home,
+        navigation,
+        preloader,
+    })
 })
 
 app.listen(port, () => {
