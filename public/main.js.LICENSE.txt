@@ -1,3 +1,5 @@
+/*! ../../classes/Pages */
+
 /*! ./ */
 
 /*! ./BaseClient */
@@ -21,6 +23,14 @@
 /*! ./node_modules/webpack-dev-server/client/clients/SockJSClient.js */
 
 /*! ./overlay */
+
+/*! ./pages/About */
+
+/*! ./pages/Collections */
+
+/*! ./pages/Detail */
+
+/*! ./pages/Home */
 
 /*! ./parse */
 
@@ -74,9 +84,13 @@
 
 /*! https://mths.be/punycode v1.4.1 by @mathias */
 
+/*! lodash */
+
 /*! loglevel */
 
 /*! object-inspect */
+
+/*! process */
 
 /*! punycode */
 
@@ -94,17 +108,37 @@
 
 /*! webpack/hot/emitter */
 
+/*!**********************!*\
+  !*** ./app/index.js ***!
+  \**********************/
+
 /*!***************************!*\
   !*** ./styles/index.scss ***!
   \***************************/
+
+/*!******************************!*\
+  !*** ./app/classes/Pages.js ***!
+  \******************************/
 
 /*!********************************!*\
   !*** ./util.inspect (ignored) ***!
   \********************************/
 
 /*!*********************************!*\
+  !*** ./app/pages/Home/index.js ***!
+  \*********************************/
+
+/*!*********************************!*\
   !*** ./node_modules/url/url.js ***!
   \*********************************/
+
+/*!**********************************!*\
+  !*** ./app/pages/About/index.js ***!
+  \**********************************/
+
+/*!***********************************!*\
+  !*** ./app/pages/Detail/index.js ***!
+  \***********************************/
 
 /*!************************************!*\
   !*** ./node_modules/gopd/index.js ***!
@@ -118,12 +152,24 @@
   !*** ./node_modules/events/events.js ***!
   \***************************************/
 
+/*!***************************************!*\
+  !*** ./node_modules/lodash/lodash.js ***!
+  \***************************************/
+
+/*!****************************************!*\
+  !*** ./app/pages/Collections/index.js ***!
+  \****************************************/
+
 /*!*****************************************!*\
   !*** ./node_modules/call-bind/index.js ***!
   \*****************************************/
 
 /*!*****************************************!*\
   !*** ./node_modules/has-proto/index.js ***!
+  \*****************************************/
+
+/*!*****************************************!*\
+  !*** ./node_modules/process/browser.js ***!
   \*****************************************/
 
 /*!*****************************************!*\
@@ -285,3 +331,12 @@
 /*!********************************************************************************!*\
   !*** ./node_modules/webpack-dev-server/client/utils/getCurrentScriptSource.js ***!
   \********************************************************************************/
+
+/**
+ * @license
+ * Lodash <https://lodash.com/>
+ * Copyright OpenJS Foundation and other contributors <https://openjsf.org/>
+ * Released under MIT license <https://lodash.com/license>
+ * Based on Underscore.js 1.8.3 <http://underscorejs.org/LICENSE>
+ * Copyright Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
+ */

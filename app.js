@@ -3,36 +3,49 @@ require('dotenv').config()
 const express = require('express')
 const path = require('path-browserify')
 const app = express()
-const errorHandler = require('errorhandler')
 const port = 5173
 
 const Prismic = require('@prismicio/client')
-// const PrismicDom = require('prismic-dom')
 const PrismicDom = require('prismic-dom')
-const { log } = require('util')
-const { each } = require('lodash')
+
+const errorHandler = require('errorhandler')
+const bodyParser = require('body-parser')
+const methodOverride = require('method-override')
+const logger = require('morgan')
+app.use(express.static(path.join(__dirname, 'public')))
 
 app.set('views', path.join(__dirname, 'views'))
 app.set('view engine', 'pug')
 
 //Link resolvers
-const handleLinkResolver = () => {
+const handleLinkResolver = (doc) => {
+    if (doc.type == 'product') {
+        return `/detail/${doc.slug}`
+    }
+    if (doc.type == 'about') {
+        return '/about'
+    }
+
+    if (doc.type == 'collections') {
+        return '/collections'
+    }
     return '/'
 }
 
 // Middleware
+
+app.use(logger('dev'))
+app.use(errorHandler())
+app.use(bodyParser.json())
+app.use(bodyParser.urlencoded({ extended: false }))
+app.use(methodOverride())
+
 app.use((req, res, next) => {
-    // res.locals.ctx = {
-    //     endpoint: process.env.PRISMIC_ENDPOINT,
-    //     linkResolver: handleLinkResolver,
-    // }
-    res.locals.Links = handleLinkResolver
+    res.locals.Link = handleLinkResolver
     res.locals.PrismicDom = PrismicDom
 
     next()
 })
-
-app.use(errorHandler())
 
 //connect to the prismic API
 function initApi(req) {
@@ -57,9 +70,9 @@ app.get('/', async (req, res) => {
     const { results: collectionsResult } = collection
 
     res.render('pages/home', {
-        collectionsResult,
         home,
         meta,
+        collectionsResult,
         preloader,
         navigation,
     })
@@ -84,7 +97,9 @@ app.get('/detail/:uid', async (req, res) => {
     const api = await initApi(req)
     const meta = await api.getSingle('meta')
     const preloader = await api.getSingle('preloader')
-    const product = await api.getByUID('product', req.params.uid)
+    const product = await api.getByUID('product', req.params.uid, {
+        fetchLinks: 'collection.title',
+    })
     const navigation = await api.getSingle('navigation')
     const collection = await api.query(
         Prismic.Predicates.at('document.type', 'collection'),

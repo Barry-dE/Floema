@@ -1,18 +1,14 @@
-import { log } from 'util'
+import { title } from 'process'
 import Page from '../../classes/Pages'
-
 export default class About extends Page {
     constructor() {
         super({
             id: 'about',
             element: '.about',
             elements: {
-                title: '.about_title',
-                wrapper: '.about_wrapper',
+                title: '.about__title',
                 navigation: document.querySelector('.navigation'),
             },
         })
-
-        console.log('About')
     }
 }
