@@ -14,9 +14,11 @@ export default class Home extends Page {
 
     create() {
         super.create()
-        const [link] = this.elements.button
-        link.addEventListener('click', () => {
-            console.log('you clicked me')
-        })
+        if (this.elements.button) {
+            const [link] = this.elements.button
+            link.addEventListener('click', () => {
+                console.log('you clicked me')
+            })
+        }
     }
 }
