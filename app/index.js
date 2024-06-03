@@ -3,12 +3,21 @@ import About from './pages/About'
 import Collections from './pages/Collections'
 import Detail from './pages/Detail'
 import Home from './pages/Home'
+import Preloader from './components/preloader'
 
 class App {
     constructor() {
+        this.createPreloader() //creates the preloader component
         this.createContent()
         this.createPages()
         this.addLinkListeners()
+    }
+
+    // 2) (preloader) create preloader instance
+    createPreloader() {
+        this.preloader = new Preloader()
+        // 3 listen to preloader complete event
+        this.preloader.once('completed', this.onPreloaded.bind(this))
     }
 
     // 1. create pages
@@ -55,6 +64,10 @@ class App {
         }
     }
 
+    //4) preloader -- what should happen when everything has been preloaded
+    onPreloaded() {
+        this.preloader.destroy()
+    }
     /**
      * Adds event listeners to links for the purpose of navigation.
      * Listens for click events on links to navigate to different pages

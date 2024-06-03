@@ -14,12 +14,13 @@ block content
       
       .collections__gallery 
         .collections__gallery__wrapper
+         
           each collection in collections
             each product in collection.data.products
               a.collections__gallery__link(href=Link(product.products_product))
                 figure.collections__gallery__media 
                   if product.products_product && product.products_product.data && product.products_product.data.image
-                    img.collections__gallery__media__image(alt=product.products_product.data.image.alt src=product.products_product.data.image.url)
+                    img.collections__gallery__media__image(alt=product.products_product.data.image.alt data-src=product.products_product.data.image.url)
 
       .collections__content
         each collection, index  in collections
