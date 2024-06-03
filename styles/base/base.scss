@@ -6,18 +6,14 @@
 }
 
 html {
-    background: $color-contessa;
-    color: $color-quarter-spanish-white;
     font-size: calc(100vw / 1920 * 10);
     line-height: 1;
-    // hijack the scroll (smooth scroll)
-    left: 0;
-    top: 0;
-    height: 100%;
-    width: 100%;
-    position: fixed;
-    //////////////////////
-    overflow: hidden;
+    // left: 0;
+    // top: 0;
+    // height: 100%;
+    // width: 100%;
+    // position: fixed;
+    // overflow: hidden;
     @include media('<phone') {
         font-size: calc(100vw / 750 * 10);
     }
@@ -26,13 +22,10 @@ html {
 body {
     @extend %description-18;
     font-family: $font-suisse-bp;
-
-    // hijack the scroll (smooth scroll)
-    left: 0;
-    top: 0;
+    background: $color-contessa;
+    color: $color-quarter-spanish-white;
     height: 100%;
     width: 100%;
-    position: fixed;
 }
 
 a {
@@ -55,23 +48,24 @@ button {
     outline: none;
 }
 
-// img {
-//    opacity: 0;
-//    transition: opacity 0.4s ease;
-//   vertical-align: middle;
-
-//     &.loaded {
-//    opacity: 1;
-//     }
-// }
-
-.content {
-    height: 100%;
-    width: 100%;
-    left: 0;
-    top: 0;
-    position: absolute;
+img {
+    // opacity: 0;
+    transition: opacity 0.4s ease;
+    vertical-align: middle;
+    width: 40rem;
+    height: 50rem;
+    // &.loaded {
+    //     opacity: 1;
+    // }
 }
+
+// .content {
+//     height: 100%;
+//     width: 100%;
+//     left: 0;
+//     top: 0;
+//     position: absolute;
+// }
 
 [data-animation='label'],
 [data-animation='paragraph'],

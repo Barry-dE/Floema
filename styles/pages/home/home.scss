@@ -1,14 +1,14 @@
 .home {
     @extend %center;
     @extend %page;
-    // @extend %cover;
-    background-color: $color-contessa;
-    color: $color-quarter-spanish-white;
-    text-align: center;
-    overflow: hidden;
 
-    &::after,
-    &::before {
+    //background: $color-contessa;
+    //color: $color-quarter-spanish-white;
+    overflow: hidden;
+    text-align: center;
+
+    &:before,
+    &:after {
         content: '';
         height: 24rem;
         left: 0;
@@ -17,7 +17,7 @@
         z-index: 1;
     }
 
-    &::before {
+    &:before {
         background: linear-gradient(
             to bottom,
             $color-contessa 0%,
@@ -25,7 +25,8 @@
         );
         top: 0;
     }
-    &::after {
+
+    &:after {
         background: linear-gradient(
             to top,
             $color-contessa 0%,
@@ -34,43 +35,86 @@
         bottom: 0;
     }
 }
-.home_wrapper {
+
+.home__wrapper {
 }
-.home_titles {
+
+.home__titles {
     @extend %vertical-titles;
 }
-.home_titles_label {
+
+.home__titles__label {
     @extend %vertical-titles__label;
 }
-.home_titles_title {
+
+.home__titles__title {
     @extend %vertical-titles__title;
 }
-.home_gallery {
+
+.home__gallery {
     @extend %cover;
+    // top: 10rem;
+    // height: unset;
+    // left: 50%;
+    // transform: translateX(-50%);
+    // padding: 2.5rem 2.5rem;
+    // display: grid;
+    // grid-template-columns: repeat(5, 1fr);
+    // grid-gap: 5rem;
+    // visibility: hidden;
 }
-.home_gallery_media {
+
+.home__gallery__media {
+    // width: 100%;
     position: absolute;
+
+    // &:nth-child(5n + 2) {
+    //     transform: translateY(10rem);
+    // }
+
+    // &:nth-child(5n + 3) {
+    //     transform: translateY(30rem);
+    // }
+
+    // &:nth-child(5n + 4) {
+    //     transform: translateY(20rem);
+    // }
+
+    // &:nth-child(5n + 5) {
+    //     transform: translateY(40rem);
+    // }
 }
-.home_gallery_media_image {
-    height: 55rem;
-    width: 44.7rem;
+
+.home__gallery__media__image {
+    // opacity: 1;
+    // width: 100%;
+    // @extend %cover;
+    // object-fit: cover;
 }
-.home_link {
-    align-items: center;
-    bottom: 9rem;
+
+.home__link {
     @extend %description-14;
-    letter-spacing: 0.05rem;
-    text-transform: uppercase;
+
+    align-items: center;
+    bottom: 5rem;
     display: flex;
     height: 6rem;
     justify-content: center;
     left: 50%;
+    letter-spacing: 0.05rem;
     position: absolute;
+    text-transform: uppercase;
     transform: translateX(-50%);
     width: 28.8rem;
     z-index: 2;
+
+    @include media('<phone') {
+        bottom: 7.5rem;
+        height: 13.7rem;
+        width: 55rem;
+    }
 }
 
-.home_link_icon {
+.home__link__icon {
     @extend %cover;
 }

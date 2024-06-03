@@ -1,20 +1,19 @@
 .preloader {
     @extend %cover;
     @extend %center;
-    border: 1px solid green;
-    // display: none;
-    align-items: center;
-    justify-content: center;
+    position: fixed;
     flex-direction: column;
     background-color: $color-contessa;
     color: $color-quarter-spanish-white;
     z-index: z('preloader');
+    // display: none;
 }
-.preloader_text {
-    max-width: 66rem;
-    text-align: center;
-    font-size: 0;
 
+.preloader__text {
+    max-width: 68rem;
+    text-align: center;
+    @extend %title-53;
+    line-height: 1;
     // set the split span to inline block so they can be translated
     span {
         display: inline-block;
@@ -26,7 +25,7 @@
     }
 }
 
-.preloader_number {
+.preloader__number {
     position: absolute;
     bottom: 7.3rem;
     overflow: hidden;
@@ -38,6 +37,6 @@
     }
 }
 
-.preloader_number_text {
+.preloader__number__text {
     display: inline-block;
 }

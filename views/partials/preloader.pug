@@ -1,10 +1,9 @@
-.preloader 
-  p.preloader_text
-    | The surprise of what is 
-    br
-    |possible to make with a simple
-    br
-    | and thin thread.
+.preloader
+  p.preloader__text=preloader.data.title
     
-  .preloader_number
-    .preloader_number_text 0%
+
+  .preloader__number
+    .preloader__number__text 0%
+
+
+//- !=preloader.data.title.replace(/\n/g, '<br>')

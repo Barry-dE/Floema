@@ -1,113 +1,87 @@
-import About from './pages/About'
-import Detail from './pages/Detail'
-import Collections from './pages/Collections'
-import Home from './pages/Home'
 import { each } from 'lodash'
+import About from './pages/About'
+import Collections from './pages/Collections'
+import Detail from './pages/Detail'
+import Home from './pages/Home'
 import Preloader from './components/preloader'
+
 class App {
     constructor() {
-        this.createPreloader() //initialize the preloader class
+        this.createPreloader() //creates the preloader component
         this.createContent()
         this.createPages()
         this.addLinkListeners()
-        this.update() //gets called over and over in each animation frame of the browser (requestAnimationFrame)
-        this.addEventListeners() //calls the onResize method
     }
 
-    // 1. Create the pages
+    // 2) (preloader) create preloader instance
+    createPreloader() {
+        this.preloader = new Preloader()
+        // 3 listen to preloader complete event
+        this.preloader.once('completed', this.onPreloaded.bind(this))
+    }
+
+    // 1. create pages
     createPages() {
+        //structure that holds all the pages
         this.pages = {
             about: new About(),
-            collection: new Collections(),
+            collections: new Collections(),
             detail: new Detail(),
             home: new Home(),
         }
 
-        // 3. set the current page
+        //initialize current page
         this.page = this.pages[this.template]
         this.page.create()
+        this.page.show()
     }
 
-    // 7. create preloader and listen for image loading completion
-    createPreloader() {
-        this.preloader = new Preloader()
-        this.preloader.once('completed', this.onPreloaded.bind(this))
-    }
-
-    // 2. initialize about and home page when you are in the about page and homepage
+    //2 create the content of each page user tries to access
     createContent() {
         this.content = document.querySelector('.content')
         this.template = this.content.getAttribute('data-template')
     }
 
-    //6. destroy the current preloader after the assest loading have been completed
-    onPreloaded() {
-        this.preloader.destroy() // destroy preloader
-        this.onResize()
-        this.page.show() //show page
-    }
-
-    // 8. requestAnimationframe (smooth scroll)
-    update() {
-        if (this.page && this.page.update) {
-            this.page.update()
-        }
-
-        this.frame = window.requestAnimationFrame(this.update.bind(this))
-    }
-
-    // limit page smooth scroll to the height of the wrapper
-    addEventListeners() {
-        window.addEventListener('resize', this.onResize.bind(this))
-    }
-
-    //  4. select all the links on the website and listen for click event
-    addLinkListeners() {
-        const links = document.querySelectorAll('a')
-        each(links, (link) => {
-            link.onclick = (event) => {
-                event.preventDefault()
-                const { href } = link
-
-                // get the clicked link to load the clicked page
-                this.onChange(href)
-            }
-        })
-    }
-
-    //5.  fetch and render the clicked page without refreshing the browser
+    // 7) listen for url change and fetch the clicked page and content.
     async onChange(url) {
-        // hide the current page
-        await this.page.hide()
-
-        // fetch the clicked page
+        this.page.hide() //hide current page before fetching the requested page
         const request = await window.fetch(url)
 
         if (request.status === 200) {
             const html = await request.text()
             const div = document.createElement('div')
             div.innerHTML = html
-
+            console.log(div)
             const divContent = div.querySelector('.content')
-            this.template = divContent.getAttribute('data-template')
+            this.template = divContent.getAttribute['data-template']
             this.content.setAttribute('data-template', this.template)
             this.content.innerHTML = divContent.innerHTML
 
-            this.page = this.pages[this.template]
-            this.onResize()
             this.page.create()
             this.page.show()
-            this.addLinkListeners()
         } else {
             console.log('Error')
         }
     }
 
-    //resize current page if it has the onResize method
-    onResize() {
-        if (this.page && this.page.onResize) {
-            this.page.onResize()
-        }
+    //4) preloader -- what should happen when everything has been preloaded
+    onPreloaded() {
+        this.preloader.destroy()
+    }
+    /**
+     * Adds event listeners to links for the purpose of navigation.
+     * Listens for click events on links to navigate to different pages
+     * 6)
+     */
+    addLinkListeners() {
+        const links = document.querySelectorAll('a')
+        each(links, (link) => {
+            link.onclick = (e) => {
+                e.preventDefault()
+                const { href } = link
+                this.onChange(href)
+            }
+        })
     }
 }
 
