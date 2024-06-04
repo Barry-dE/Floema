@@ -1,9 +1,10 @@
 .about {
-    // @extend %page;
+    @extend %page;
     width: 100%;
     height: 100%;
     background: $color-cadet-blue;
     color: $color-bright-gray;
+    opacity: 0;
 }
 
 .about__wrapper {

@@ -8,12 +8,12 @@
 html {
     font-size: calc(100vw / 1920 * 10);
     line-height: 1;
-    // left: 0;
-    // top: 0;
-    // height: 100%;
-    // width: 100%;
-    // position: fixed;
-    // overflow: hidden;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 100%;
+    position: fixed;
+    overflow: hidden;
     @include media('<phone') {
         font-size: calc(100vw / 750 * 10);
     }
@@ -26,6 +26,11 @@ body {
     color: $color-quarter-spanish-white;
     height: 100%;
     width: 100%;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 100%;
+    position: fixed;
 }
 
 a {
@@ -59,13 +64,13 @@ img {
     // }
 }
 
-// .content {
-//     height: 100%;
-//     width: 100%;
-//     left: 0;
-//     top: 0;
-//     position: absolute;
-// }
+.content {
+    height: 100%;
+    width: 100%;
+    left: 0;
+    top: 0;
+    position: absolute;
+}
 
 [data-animation='label'],
 [data-animation='paragraph'],
