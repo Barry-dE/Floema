@@ -1,6 +1,7 @@
 import gsap from 'gsap'
 import { each } from 'lodash'
-import { resolve } from 'path-browserify'
+import Prefix from 'prefix'
+
 export default class Page {
     constructor({ element, elements, id }) {
         this.id = id
@@ -8,6 +9,13 @@ export default class Page {
         this.selectorChildren = {
             ...elements,
         }
+        this.transformPrefix = Prefix('transform')
+        console.log(this.transformPrefix)
+        this.scroll = {
+            current: 0,
+            target: 0,
+            last: 0,
+        } //6 smooth scroll
     }
 
     // 3) Initialize the page by querying the main element and its children
@@ -15,6 +23,13 @@ export default class Page {
         // Query the main element using the selector
         this.element = document.querySelector(this.selector)
         this.elements = {}
+
+        this.scroll = {
+            //reset in create
+            current: 0,
+            target: 0,
+            last: 0,
+        } //6 smooth scroll
 
         // Iterate through each selector child entry
         each(this.selectorChildren, (entry, key) => {
@@ -42,9 +57,22 @@ export default class Page {
     // 4. show page ()
     show() {
         return new Promise((resolve) => {
-            gsap.from(this.element, {
-                autoAlpha: 0,
-                onComplete: resolve,
+            this.animateIn = gsap.timeline()
+
+            this.animateIn.fromTo(
+                this.element,
+                {
+                    autoAlpha: 0,
+                },
+                {
+                    autoAlpha: 1,
+                },
+            )
+
+            this.animateIn.call(() => {
+                this.addEventListeners() //add event listeners after the animation is complete
+
+                resolve()
             })
         })
     }
@@ -52,10 +80,41 @@ export default class Page {
     // 5) hide page (call in onChange)
     hide() {
         return new Promise((resolve) => {
-            gsap.to(this.element, {
+            this.animateOut = gsap.timeline()
+
+            this.animateOut.to(this.element, {
                 autoAlpha: 0,
                 onComplete: resolve,
             })
         })
+    }
+
+    //3 smooth scroll
+    onMouseWheel(event) {
+        const { deltaY } = event
+        console.log(deltaY)
+
+        this.scroll.target += deltaY
+    }
+
+    //5 smooth scroll
+    update() {
+        this.scroll.current = gsap.utils.interpolate(
+            this.scroll.current,
+            this.scroll.target,
+            0.1,
+        )
+
+        this.elements.wrapper.styles(this.transformPrefix) = `translateY(-${this.scroll.current} px)`
+    }
+
+    // 1) smooth scroll
+    addEventListeners() {
+        window.addEventListener('mousewheel', this.onMouseWheel)
+    }
+
+    //2 smooth scroll
+    removeEventListeners() {
+        window.removeEventListener('mousewheel', this.onMouseWheel)
     }
 }

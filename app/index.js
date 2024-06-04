@@ -11,6 +11,7 @@ class App {
         this.createContent()
         this.createPages()
         this.addLinkListeners()
+        this.update() //related to smooth scroll
     }
 
     // 2) (preloader) create preloader instance
@@ -33,7 +34,6 @@ class App {
         //initialize current page
         this.page = this.pages[this.template]
         this.page.create()
-        this.page.show()
     }
 
     //2 create the content of each page user tries to access
@@ -67,6 +67,15 @@ class App {
     //4) preloader -- what should happen when everything has been preloaded
     onPreloaded() {
         this.preloader.destroy()
+        this.page.show()
+    }
+
+    //4) smooth scroll
+    update() {
+        if (this.page && this.page.update) {
+            this.page.update()
+        }
+        this.frame = window.requestAnimationFrame(this.update(this))
     }
     /**
      * Adds event listeners to links for the purpose of navigation.
