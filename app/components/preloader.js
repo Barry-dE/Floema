@@ -35,29 +35,41 @@ export default class Preloader extends Component {
     onLoaded() {
         return new Promise((resolve) => {
             this.animateOut = gsap.timeline({
-                delay: 2,
+                delay: 3,
             })
 
             this.animateOut.to(this.elements.titleSpans, {
                 stagger: 0.1,
-                y: '-100%',
+                y: '100%',
                 duration: 1.5,
                 ease: 'expo.out',
             })
 
-            this.animateOut.to(this.elements.numberText, {
-                stagger: 0.1,
-                y: '-100%',
-                duration: 1.5,
-                ease: 'expo.out',
-            })
-            // this.animateOut.to(this.element, {
-            //     autoAlpha: 0,
-            // })
+            this.animateOut.to(
+                this.elements.numberText,
+                {
+                    stagger: 0.1,
+                    y: '100%',
+                    duration: 1.5,
+                    ease: 'expo.out',
+                },
+                '-=1.4',
+            )
+            this.animateOut.to(
+                this.element,
+                {
+                    autoAlpha: 0,
+                    scaleY: 0,
+                    transformOrigin: '0 0',
+                    duration: 1.5,
+                    ease: 'expo.out',
+                },
+                '-=1',
+            )
 
-            // this.animateOut.call(() => {
-            //     this.emit('completed')
-            // })
+            this.animateOut.call(() => {
+                this.emit('completed')
+            })
         })
     }
 

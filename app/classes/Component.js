@@ -4,7 +4,7 @@ import { resolve } from 'path-browserify'
 export default class Component extends EventEmitter {
     constructor({ element, elements }) {
         super()
-        
+
         this.selector = element
         this.selectorChildren = {
             ...elements,
@@ -17,7 +17,11 @@ export default class Component extends EventEmitter {
     // Initialize the page by querying the main element and its children
     create() {
         // Query the main element using the selector
-        this.element = document.querySelector(this.selector)
+        if (this.selector instanceof HTMLElement) {
+            this.element = this.selector
+        } else {
+            this.element = document.querySelector(this.selector)
+        }
         this.elements = {}
 
         // Iterate through each selector child entry

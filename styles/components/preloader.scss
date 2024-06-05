@@ -3,17 +3,22 @@
     @extend %center;
     position: fixed;
     flex-direction: column;
-    background-color: $color-contessa;
+    background-color: green;
     color: $color-quarter-spanish-white;
     z-index: z('preloader');
-    // display: none;
+    // transform: scaleY(1);
+    // transform-origin: 0 0;
+    // opacity: 1;
+    // transition:
+    //     transform 2s ease,
+    //     opacity .6s ease;
 }
 
 .preloader__text {
     max-width: 68rem;
     text-align: center;
-    @extend %title-53;
     line-height: 1;
+    word-spacing: 0.5rem;
     // set the split span to inline block so they can be translated
     span {
         display: inline-block;

@@ -4,17 +4,17 @@
     height: 100%;
     background: $color-cadet-blue;
     color: $color-bright-gray;
+    opacity: 0;
 }
 
 .about__wrapper {
 }
 
 .about__title {
-    @extend %title-110;
-
     margin: auto;
     max-width: 128rem;
     text-align: center;
+    @extend %title-110;
 
     @include media('<phone') {
         max-width: 67.7rem;
