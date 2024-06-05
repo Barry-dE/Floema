@@ -11,7 +11,7 @@ export default class Titles extends Animation {
             elements,
         })
 
-        // Split the titles by words and append the results to the element
+        // Split the titles by words and append white spaces to the element
         split({ element: this.element, append: true })
         split({ element: this.element, append: true })
 

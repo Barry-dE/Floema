@@ -3,7 +3,7 @@ import Animation from '../classes/animation'
 import { split, calculate } from '../utils/text'
 import { each } from 'lodash'
 
-export default class Paragraph extends Animation {
+export default class Labels extends Animation {
     constructor({ element, elements }) {
         // Call the superclass constructor
         super({
@@ -11,7 +11,12 @@ export default class Paragraph extends Animation {
             elements,
         })
 
-        this.elementLinesSpan = split({ element: this.element, append: true })
+        // Split the titles by words and append white spaces to the element
+        split({ element: this.element, append: true })
+        split({ element: this.element, append: true })
+
+        // Select all nested spans within the main span (these contain the words)
+        this.elementLinesSpan = this.element.querySelectorAll('span span')
 
         // Calculate the positions of the title lines on resize
         this.onResize()
@@ -34,10 +39,8 @@ export default class Paragraph extends Animation {
                 line,
                 {
                     y: '100%',
-                    autoAlpha: 0,
                 },
                 {
-                    autoAlpha: 1,
                     duration: 1.5,
                     delay: index * 0.2,
                     ease: 'expo.out',

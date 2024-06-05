@@ -2,6 +2,9 @@ import gsap from 'gsap'
 import { each, map } from 'lodash'
 import Prefix from 'prefix'
 import Titles from '../animations/Title'
+import Paragraph from '../animations/Paragrapgh'
+import Labels from '../animations/Label'
+import Highlights from '../animations/Highlight'
 
 export default class Page {
     constructor({ element, elements, id }) {
@@ -9,7 +12,10 @@ export default class Page {
         this.selector = element
         this.selectorChildren = {
             ...elements,
+            animationsHighlights: '[data-animation="highlight"]',
             animationsTitles: '[data-animation="title"]', //title element
+            animationsParagraphs: '[data-animation="paragraph"]',
+            animationsLabels: '[data-animation="label"]',
         }
 
         this.scroll = {
@@ -59,12 +65,43 @@ export default class Page {
         this.createAnimations() //create titles animation as soon as the DOM is ready
     }
 
-    //2) titles animation
+    //2) Text animations
     createAnimations() {
-        console.log(this.elements.animationsTitles)
+        this.animations = []
+
+        //highlights
+        this.animateHighlights = map(
+            this.elements.animationsHighlights,
+            (element) => {
+                return new Highlights({ element })
+            },
+        )
+
+        this.animations.push(...this.animateHighlights)
+
+        //titles
         this.animateTitles = map(this.elements.animationsTitles, (element) => {
             return new Titles({ element })
         })
+
+        this.animations.push(...this.animateTitles)
+
+        // paragraph
+        this.animateParagraphs = map(
+            this.elements.animationsParagraphs,
+            (element) => {
+                return new Paragraph({ element })
+            },
+        )
+
+        this.animations.push(...this.animateParagraphs)
+
+        //labels
+        this.animateLabel = map(this.elements.animationsLabels, (element) => {
+            return new Labels({ element })
+        })
+
+        this.animations.push(...this.animateParagraphs)
     }
 
     // 4. show page ()
@@ -137,6 +174,6 @@ export default class Page {
     // }
 
     onResize() {
-        each(this.animateTitles, (animation) => animation.onResize())
+        each(this.animations, (animation) => animation.onResize())
     }
 }
