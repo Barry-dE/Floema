@@ -1,6 +1,7 @@
 import gsap from 'gsap'
-import { each } from 'lodash'
+import { each, map } from 'lodash'
 import Prefix from 'prefix'
+import Titles from '../animations/Title'
 
 export default class Page {
     constructor({ element, elements, id }) {
@@ -8,14 +9,16 @@ export default class Page {
         this.selector = element
         this.selectorChildren = {
             ...elements,
+            animationsTitles: '[data-animation="title"]', //title element
         }
-        this.transformPrefix = Prefix('transform')
-        console.log(this.transformPrefix)
+
         this.scroll = {
             current: 0,
             target: 0,
             last: 0,
         } //6 smooth scroll
+
+        this.onResize()
     }
 
     // 3) Initialize the page by querying the main element and its children
@@ -52,6 +55,16 @@ export default class Page {
                 }
             }
         })
+
+        this.createAnimations() //create titles animation as soon as the DOM is ready
+    }
+
+    //2) titles animation
+    createAnimations() {
+        console.log(this.elements.animationsTitles)
+        this.animateTitles = map(this.elements.animationsTitles, (element) => {
+            return new Titles({ element })
+        })
     }
 
     // 4. show page ()
@@ -70,7 +83,7 @@ export default class Page {
             )
 
             this.animateIn.call(() => {
-                this.addEventListeners() //add event listeners after the animation is complete
+                // this.addEventListeners() //add event listeners after the animation is complete
 
                 resolve()
             })
@@ -90,31 +103,40 @@ export default class Page {
     }
 
     //3 smooth scroll
-    onMouseWheel(event) {
-        const { deltaY } = event
-        console.log(deltaY)
+    // onMouseWheel(event) {
+    //     const { deltaY } = event
+    //     console.log(deltaY)
 
-        this.scroll.target += deltaY
-    }
+    //     this.scroll.target += deltaY
+    // }
 
     //5 smooth scroll
-    update() {
-        this.scroll.current = gsap.utils.interpolate(
-            this.scroll.current,
-            this.scroll.target,
-            0.1,
-        )
+    // update() {
+    //     this.scroll.current = gsap.utils.interpolate(
+    //         this.scroll.current,
+    //         this.scroll.target,
+    //         0.1,
+    //     )
 
-        this.elements.wrapper.styles(this.transformPrefix) = `translateY(-${this.scroll.current} px)`
-    }
+    //     if (this.elements.wrapper && this.elements.wrapper[0]) {
+    //         this.elements.wrapper[0].styles[this.transformPrefix] =
+    //             `translateY(-${this.scroll.current} px)`
+    //     }
+
+    //     // console.log('Transform Prefix:', this.transformPrefix)
+    // }
 
     // 1) smooth scroll
-    addEventListeners() {
-        window.addEventListener('mousewheel', this.onMouseWheel)
-    }
+    // addEventListeners() {
+    //     window.addEventListener('mousewheel', this.onMouseWheel)
+    // }
 
-    //2 smooth scroll
-    removeEventListeners() {
-        window.removeEventListener('mousewheel', this.onMouseWheel)
+    // //2 smooth scroll
+    // removeEventListeners() {
+    //     window.removeEventListener('mousewheel', this.onMouseWheel)
+    // }
+
+    onResize() {
+        each(this.animateTitles, (animation) => animation.onResize())
     }
 }
