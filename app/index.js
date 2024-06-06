@@ -68,8 +68,6 @@ class App {
             this.template = divContent.getAttribute['data-template']
             this.content.setAttribute('data-template', this.template)
             this.content.innerHTML = divContent.innerHTML
-            console.log('url updated to,', url)
-            // this.navigation.onChange(this.template)
             this.page.create()
             this.page.show()
         } else {
