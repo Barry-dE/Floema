@@ -8,6 +8,8 @@
 html {
     font-size: calc(100vw / 1920 * 10);
     line-height: 1;
+    background: $color-contessa;
+    color: $color-quarter-spanish-white;
     // left: 0;
     // top: 0;
     height: 100%;
@@ -22,8 +24,7 @@ html {
 body {
     @extend %description-18;
     font-family: $font-suisse-bp;
-    background: $color-contessa;
-    color: $color-quarter-spanish-white;
+
     height: 100%;
     width: 100%;
     // left: 0;

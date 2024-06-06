@@ -1,5 +1,9 @@
 %page {
     @extend %cover;
+
+    //stop page from flashing
+    opacity: 0;
+    visibility: hidden;
 }
 
 %page--active {

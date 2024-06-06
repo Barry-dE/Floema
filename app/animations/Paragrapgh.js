@@ -28,7 +28,7 @@ export default class Paragraph extends Animation {
             autoAlpha: 1,
         })
 
-        // Animate each line of the title from bottom to top
+        // Animate each line of the paragraph from bottom to top
         each(this.elementsLines, (line, index) => {
             this.timelineIn.fromTo(
                 line,
