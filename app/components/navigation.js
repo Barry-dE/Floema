@@ -16,7 +16,7 @@ export default class Navigation extends Component {
 
     //checks the current page template and displays the correct link
     onChange(template) {
-        console.log(template)
+        console.log(this.elements.links)
 
         if (template === 'about') {
             gsap.to(this.element, {
@@ -26,10 +26,13 @@ export default class Navigation extends Component {
 
             gsap.to(this.elements.items[0], {
                 autoAlpha: 1,
+                duration: 0.75,
+                delay: 0.75,
             })
 
             gsap.to(this.elements.items[1], {
                 autoAlpha: 0,
+                duration: 0.75,
             })
         } else {
             gsap.to(this.element, {
@@ -39,10 +42,13 @@ export default class Navigation extends Component {
 
             gsap.to(this.elements.items[0], {
                 autoAlpha: 0,
+                duration: 0.75,
             })
 
             gsap.to(this.elements.items[1], {
                 autoAlpha: 1,
+                duration: 0.75,
+                delay: 0.75,
             })
         }
     }

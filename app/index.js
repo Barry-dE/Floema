@@ -36,10 +36,10 @@ class App {
     createPages() {
         //structure that holds all the pages
         this.pages = {
+            home: new Home(),
             about: new About(),
             collections: new Collections(),
             detail: new Detail(),
-            home: new Home(),
         }
 
         //initialize current page
@@ -51,16 +51,15 @@ class App {
     createContent() {
         this.content = document.querySelector('.content')
         this.template = this.content.getAttribute('data-template')
+        console.log(this.template)
     }
 
     // 7) listen for url change and fetch the clicked page and content.
     async onChange(url) {
-        console.log('navigating to', url)
         this.page.hide() //hide current page before fetching the requested page
         const request = await window.fetch(url)
 
         if (request.status === 200) {
-            console.log('page fetched successfully')
             const html = await request.text()
             const div = document.createElement('div')
             div.innerHTML = html

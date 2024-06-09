@@ -44,7 +44,7 @@
 }
 
 .navigation__list__link {
-    // @extend %link--hidden;
+    @extend %link--hidden; //link hover animation
     @extend %title-24;
 
     display: block;

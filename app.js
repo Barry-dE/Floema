@@ -4,6 +4,7 @@ const express = require('express')
 const path = require('path-browserify')
 const app = express()
 const port = 5173
+const UAParser = require('ua-parser-js')
 
 const Prismic = require('@prismicio/client')
 const PrismicDom = require('prismic-dom')
@@ -41,6 +42,13 @@ app.use(bodyParser.urlencoded({ extended: false }))
 app.use(methodOverride())
 
 app.use((req, res, next) => {
+    const ua = UAParser(req.headers['user-agent'])
+    res.locals.isDesktop = ua.device.type === undefined
+    res.locals.isPhone = ua.device.type === 'mobile'
+    res.locals.isTablet = ua.device.type === 'tablet'
+
+    console.log(res.locals.isDesktop, res.locals.isPhone, res.locals.isTablet)
+
     res.locals.Link = handleLinkResolver
     res.locals.PrismicDom = PrismicDom
 

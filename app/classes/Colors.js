@@ -2,7 +2,6 @@ import gsap from 'gsap'
 
 class Colors {
     change({ backgroundColor, color }) {
-        console.log(document.documentElement)
         gsap.to(document.documentElement, {
             backgroundColor,
             color,
