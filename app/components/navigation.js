@@ -16,7 +16,7 @@ export default class Navigation extends Component {
 
     //checks the current page template and displays the correct link
     onChange(template) {
-        console.log(template)
+        console.log(this.elements.links)
 
         if (template === 'about') {
             gsap.to(this.element, {

@@ -1,6 +1,6 @@
 import { each } from 'lodash'
 import EventEmitter from 'events'
-import { resolve } from 'path-browserify'
+
 export default class Component extends EventEmitter {
     constructor({ element, elements }) {
         super()
@@ -41,6 +41,7 @@ export default class Component extends EventEmitter {
                     this.elements[key] = null
                 } else if (this.elements[key].length === 1) {
                     // If only one element is found, keep it as a NodeList
+
                     this.elements[key] = document.querySelectorAll(entry)
                 }
             }

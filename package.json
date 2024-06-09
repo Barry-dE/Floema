@@ -40,6 +40,7 @@
     "sass": "^1.32.10",
     "sass-loader": "^11.0.1",
     "terser-webpack-plugin": "^5.1.1",
+    "ua-parser-js": "^2.0.0-beta.3",
     "webpack": "^5.89.0",
     "webpack-cli": "^4.6.0",
     "webpack-dev-server": "^3.11.2",
@@ -64,7 +65,6 @@
     "prismic-dom": "^2.2.5",
     "process": "^0.11.10",
     "pug": "^3.0.2",
-    "ua-parser-js": "^0.7.28",
     "util": "^0.12.5"
   }
 }

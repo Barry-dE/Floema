@@ -60,9 +60,9 @@ img {
     vertical-align: middle;
     width: 40rem;
     height: 50rem;
-    // &.loaded {
-    //     opacity: 1;
-    // }
+    &.loaded {
+        // opacity: 1;
+    }
 }
 
 .content {

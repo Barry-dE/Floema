@@ -10,15 +10,19 @@ export default class Home extends Page {
                 button: '.home__link',
             },
         })
+
+        this.button = document.querySelector('.home__link')
     }
 
     create() {
         super.create()
-        if (this.elements.button) {
-            const [link] = this.elements.button
-            link.addEventListener('click', () => {
-                console.log('you clicked me')
-            })
-        }
+        this.link = new Button({
+            element: this.button,
+        })
+    }
+
+    destroy() {
+        super.destroy()
+        this.link.removeEventListeners()
     }
 }

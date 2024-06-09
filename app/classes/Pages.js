@@ -6,6 +6,7 @@ import Paragraph from '../animations/Paragrapgh'
 import Labels from '../animations/Label'
 import Highlights from '../animations/Highlight'
 import { ColorsManager } from './Colors'
+import AsyncLoad from './AsyncLoad'
 
 export default class Page {
     constructor({ element, elements, id }) {
@@ -17,6 +18,7 @@ export default class Page {
             animationsTitles: '[data-animation="title"]', //title element
             animationsParagraphs: '[data-animation="paragraph"]',
             animationsLabels: '[data-animation="label"]',
+            preloaders: '[data-src]',
         }
 
         this.scroll = {
@@ -64,6 +66,7 @@ export default class Page {
         })
 
         this.createAnimations() //create titles animation as soon as the DOM is ready
+        this.createPreloader() //preload the images as the page is created(initialize the AsyncLoad class)
     }
 
     //2) Text animations
@@ -105,6 +108,14 @@ export default class Page {
         this.animations.push(...this.animateParagraphs)
     }
 
+    //image preloader
+    createPreloader() {
+        this.preloaders = map(this.elements.preloaders, (element) => {
+            console.log(element)
+            return new AsyncLoad({ element })
+        })
+    }
+
     // 4. show page ()
     show() {
         return new Promise((resolve) => {
@@ -112,7 +123,6 @@ export default class Page {
                 backgroundColor: this.element.getAttribute('data-bg-color'),
                 color: this.element.getAttribute('data-color'),
             })
-            console.log(this.element)
             this.animateIn = gsap.timeline()
 
             this.animateIn.fromTo(
@@ -135,6 +145,7 @@ export default class Page {
 
     // 5) hide page (call in onChange)
     hide() {
+        this.destroy()
         return new Promise((resolve) => {
             this.animateOut = gsap.timeline()
 
@@ -182,4 +193,6 @@ export default class Page {
     onResize() {
         each(this.animations, (animation) => animation.onResize())
     }
+
+    destroy() {}
 }
