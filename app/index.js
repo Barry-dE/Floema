@@ -5,7 +5,7 @@ import Detail from './pages/Detail'
 import Home from './pages/Home'
 import Preloader from './components/preloader'
 import Navigation from './components/navigation'
-
+import Canvas from './components/Canvas'
 class App {
     constructor() {
         this.createContent()
@@ -13,6 +13,7 @@ class App {
         this.createPages()
         this.addLinkListeners()
         this.createNavigation()
+        this.createCanvas()
 
         // this.update() //related to smooth scroll
     }
@@ -22,6 +23,10 @@ class App {
         this.preloader = new Preloader()
         // 3 listen to preloader complete event
         this.preloader.once('completed', this.onPreloaded.bind(this))
+    }
+
+    createCanvas() {
+        this.canvas = new Canvas()
     }
 
     //1) navigation
@@ -51,7 +56,6 @@ class App {
     createContent() {
         this.content = document.querySelector('.content')
         this.template = this.content.getAttribute('data-template')
-        console.log(this.template)
     }
 
     // 7) listen for url change and fetch the clicked page and content.
