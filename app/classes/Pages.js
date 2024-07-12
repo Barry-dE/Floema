@@ -1,6 +1,4 @@
 import gsap from 'gsap'
-import { each } from 'lodash'
-import { resolve } from 'path-browserify'
 
 export default class Pages {
     constructor({ id, element, elements }) {
@@ -23,7 +21,6 @@ export default class Pages {
         }
 
         this.elements = {}
-        console.log(this.selectorChildren, this.elements)
 
         Object.keys(this.selectorChildren).forEach((key) => {
             const entry = this.selectorChildren[key]
