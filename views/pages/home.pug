@@ -1,7 +1,7 @@
 extends ../base.pug
 
 block variables
-  - var template  = 'home'
+  - var template = 'home'
 
 block content 
   .home(data-background="#C97164" data-color="#F9F1E7")
@@ -9,13 +9,13 @@ block content
       .home__titles
         each collection, index in collectionsResult
           .home__titles__label
-              = `${home.data.collection} ${index === 0 ? 'One' : index === 1 ? 'Two' : index === 2 ? 'Three' : index === 3 ? 'Four' : ''}`
+            = `${home.data.collection} ${index === 0 ? 'One' : index === 1 ? 'Two' : index === 2 ? 'Three' : index === 3 ? 'Four' : ''}`
           .home__titles__title= collection.data.title 
 
       .home__gallery 
         each media in home.data.gallery
           figure.home__gallery__media
-            img.home__gallery__media__image(alt=media.image.alt data-src=media.image.url)   
+            img.home__gallery__media__image(alt=media.image.alt, data-src=media.image.url)   
     
       a.home__link(data-animation="button" href="/collections")
         span=home.data.button

@@ -34,7 +34,6 @@ const handleLinkResolver = (doc) => {
 }
 
 // Middleware
-
 app.use(logger('dev'))
 app.use(errorHandler())
 app.use(bodyParser.json())
@@ -42,12 +41,12 @@ app.use(bodyParser.urlencoded({ extended: false }))
 app.use(methodOverride())
 
 app.use((req, res, next) => {
-    const ua = UAParser(req.headers['user-agent'])
-    res.locals.isDesktop = ua.device.type === undefined
-    res.locals.isPhone = ua.device.type === 'mobile'
-    res.locals.isTablet = ua.device.type === 'tablet'
+    // const ua = UAParser(req.headers['user-agent'])
+    // res.locals.isDesktop = ua.device.type === undefined
+    // res.locals.isPhone = ua.device.type === 'mobile'
+    // res.locals.isTablet = ua.device.type === 'tablet'
 
-    console.log(res.locals.isDesktop, res.locals.isPhone, res.locals.isTablet)
+    // console.log(res.locals.isDesktop, res.locals.isPhone, res.locals.isTablet)
 
     res.locals.Link = handleLinkResolver
     res.locals.PrismicDom = PrismicDom

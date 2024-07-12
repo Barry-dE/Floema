@@ -6,13 +6,16 @@
     background-color: $color-contessa;
     color: $color-quarter-spanish-white;
     z-index: z('preloader');
+    // display: none;
 }
 
 .preloader__text {
-    max-width: 68rem;
+    max-width: 74rem;
     text-align: center;
     line-height: 1;
-    word-spacing: 0.5rem;
+    word-spacing: 0.3rem;
+    font-size: 0;
+
     // set the split span to inline block so they can be translated
     span {
         display: inline-block;

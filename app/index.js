@@ -3,14 +3,17 @@ import Collections from './pages/Collections'
 import Detail from './pages/Detail'
 import About from './pages/About'
 import { each } from 'lodash'
+import Preloader from './components/preloader'
 
 class App {
     constructor() {
+        this.createPreloader()
         this.createContent()
         this.createPages()
         this.addLinkListeners()
     }
 
+    // Routing
     createPages() {
         this.pages = {
             home: new Home(),
@@ -22,7 +25,6 @@ class App {
         // current page
         this.page = this.pages[this.template]
         this.page.create()
-        this.page.show()
     }
 
     createContent() {
@@ -46,6 +48,8 @@ class App {
                 this.page = this.pages[this.template]
                 this.page.create()
                 this.page.show()
+
+                this.addLinkListeners()
             }
         } catch (error) {
             console.log(error)
@@ -60,9 +64,19 @@ class App {
                 e.preventDefault()
                 const { href } = link
                 this.onUrlChange(href)
-                console.log(e, href)
             }
         })
+    }
+
+    // preloader
+    createPreloader() {
+        this.preloader = new Preloader()
+        this.preloader.once('completed', this.onPreloaded.bind(this))
+    }
+
+    onPreloaded() {
+        this.preloader.destroy()
+        this.page.show()
     }
 }
 

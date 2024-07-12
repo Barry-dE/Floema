@@ -1,6 +1,9 @@
 .collections {
     @extend %page;
+    background: $color-contessa;
+    color: $color-quarter-spanish-white;
 }
+
 .collections__wrapper {
     @extend %cover;
     width: 100%;
@@ -8,6 +11,7 @@
     overflow: hidden;
     position: relative;
 }
+
 .collections__titles {
     align-items: center;
     display: flex;
