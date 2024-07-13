@@ -8,14 +8,13 @@
 html {
     font-size: calc(100vw / 1920 * 10);
     line-height: 1;
-    // background: $color-contessa;
-    // color: $color-quarter-spanish-white;
-    // left: 0;
-    // top: 0;
+    position: fixed;
+    overflow: hidden;
+    left: 0;
+    top: 0;
     height: 100%;
     width: 100%;
-    // position: fixed;
-    // overflow: hidden;
+
     @include media('<phone') {
         font-size: calc(100vw / 750 * 10);
     }
@@ -24,14 +23,12 @@ html {
 body {
     @extend %description-18;
     font-family: $font-suisse-bp;
-
+    position: fixed;
+    overflow: hidden;
+    left: 0;
+    top: 0;
     height: 100%;
     width: 100%;
-    // left: 0;
-    // top: 0;
-    // height: 100%;
-    // width: 100%;
-    // position: fixed;
 }
 
 a {
@@ -66,11 +63,11 @@ img {
 }
 
 .content {
-    // height: 100%;
-    // width: 100%;
-    // left: 0;
-    // top: 0;
-    // position: absolute;
+    height: 100%;
+    width: 100%;
+    left: 0;
+    top: 0;
+    position: absolute;
 }
 
 [data-animation='label'],
