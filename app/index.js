@@ -11,6 +11,9 @@ class App {
         this.createContent()
         this.createPages()
         this.addLinkListeners()
+
+        this.update() //smooth scroll
+        this.addEventListeners()
     }
 
     // Routing
@@ -48,11 +51,19 @@ class App {
                 this.page = this.pages[this.template]
                 this.page.create()
                 this.page.show()
+                this.onResize()
 
                 this.addLinkListeners()
             }
         } catch (error) {
             console.log(error)
+        }
+    }
+
+    onResize() {
+        //call onresize for the current page if it has it
+        if (this.page && this.page.onResize) {
+            this.page.onResize()
         }
     }
 
@@ -76,7 +87,21 @@ class App {
 
     onPreloaded() {
         this.preloader.destroy()
+        this.onResize()
         this.page.show()
+    }
+
+    //smooth scroll
+    update() {
+        if (this.page && this.page.update) {
+            this.page.update()
+        }
+
+        this.frame = window.requestAnimationFrame(this.update.bind(this))
+    }
+
+    addEventListeners() {
+        window.addEventListener('resize', this.onResize.bind(this))
     }
 }
 

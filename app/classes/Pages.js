@@ -1,4 +1,5 @@
 import gsap from 'gsap'
+import Prefix from 'prefix'
 
 export default class Pages {
     constructor({ id, element, elements }) {
@@ -7,12 +8,30 @@ export default class Pages {
         this.selectorChildren = {
             ...elements,
         }
+
+        this.scroll = {
+            current: 0,
+            target: 0,
+            last: 0,
+            limit: 0,
+        }
+
+        this.transformPrefix = Prefix('transform')
+        console.log(this.transformPrefix)
+
+        this.onMouseWheelEvent = this.onMouseWheel.bind(this)
     }
 
     // initialize current page class
     create() {
         this.element = document.querySelector(this.selector)
         this.elements = {}
+        this.scroll = {
+            current: 0,
+            target: 0,
+            last: 0,
+            limit: 0,
+        }
 
         if (this.selector instanceof HTMLElement) {
             this.element = this.selector
@@ -45,25 +64,77 @@ export default class Pages {
 
     show() {
         return new Promise((resolve) => {
-            gsap.fromTo(
+            this.animationIn = gsap.timeline()
+            this.animationIn.fromTo(
                 this.element,
                 {
                     autoAlpha: 0,
                 },
                 {
                     autoAlpha: 1,
-                    onComplete: resolve,
                 },
             )
+
+            this.animationIn.call(() => {
+                this.addEventListeners()
+
+                resolve()
+            })
         })
     }
 
     hide() {
         return new Promise((resolve) => {
-            gsap.to(this.element, {
+            this.removeEventListeners()
+            this.animateOut = gsap.timeline()
+            this.animateOut.to(this.element, {
                 autoAlpha: 0,
                 onComplete: resolve,
             })
         })
+    }
+
+    // smooth scroll
+    onMouseWheel(e) {
+        const { deltaY } = e
+        this.scroll.target += deltaY
+    }
+
+    onResize() {
+        if (this.elements.wrapper) {
+            this.scroll.limit =
+                this.elements.wrapper.clientHeight - window.innerHeight
+        }
+    }
+
+    update() {
+        this.scroll.current = gsap.utils.interpolate(
+            this.scroll.current,
+            this.scroll.target,
+            0.1,
+        )
+
+        this.scroll.target = gsap.utils.clamp(
+            0,
+            this.scroll.limit,
+            this.scroll.target,
+        )
+
+        if (this.elements.wrapper) {
+            this.elements.wrapper.style[this.transformPrefix] =
+                `translateY(-${this.scroll.current}px)`
+        }
+
+        if (this.scroll.current < 0.01) {
+            this.scroll.current = 0
+        }
+    }
+
+    addEventListeners() {
+        window.addEventListener('mousewheel', this.onMouseWheelEvent)
+    }
+
+    removeEventListeners() {
+        window.removeEventListener('mousewheel', this.onMouseWheelEvent)
     }
 }
