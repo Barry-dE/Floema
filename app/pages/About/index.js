@@ -7,6 +7,7 @@ export default class About extends Pages {
             element: '.about',
             elements: {
                 title: '.about__title',
+                wrapper: '.about__wrapper',
             },
         })
     }
