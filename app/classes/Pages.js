@@ -1,5 +1,6 @@
 import gsap from 'gsap'
 import Prefix from 'prefix'
+import normalizeWheel from 'normalize-wheel'
 
 export default class Pages {
     constructor({ id, element, elements }) {
@@ -17,7 +18,6 @@ export default class Pages {
         }
 
         this.transformPrefix = Prefix('transform')
-        console.log(this.transformPrefix)
 
         this.onMouseWheelEvent = this.onMouseWheel.bind(this)
     }
@@ -96,8 +96,8 @@ export default class Pages {
 
     // smooth scroll
     onMouseWheel(e) {
-        const { deltaY } = e
-        this.scroll.target += deltaY
+        const { pixelY } = normalizeWheel(e)
+        this.scroll.target += pixelY
     }
 
     onResize() {
