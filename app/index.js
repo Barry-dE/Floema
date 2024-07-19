@@ -4,16 +4,19 @@ import Detail from './pages/Detail'
 import About from './pages/About'
 import { each } from 'lodash'
 import Preloader from './components/preloader'
+import Navigation from './components/navigation'
 
 class App {
     constructor() {
-        this.createPreloader()
         this.createContent()
+        this.createPreloader()
         this.createPages()
+
         this.addLinkListeners()
+        this.addEventListeners()
+        this.createNavigation()
 
         this.update() //smooth scroll
-        this.addEventListeners()
     }
 
     // Routing
@@ -28,11 +31,14 @@ class App {
         // current page
         this.page = this.pages[this.template]
         this.page.create()
+        console.log(this.page)
+        console.log(this.template, 'coming from create pages method')
     }
 
     createContent() {
         this.content = document.querySelector('.content')
         this.template = this.content.getAttribute('data-template')
+        console.log(this.template, 'coming from create pages method')
     }
 
     async onUrlChange(url) {
@@ -46,6 +52,7 @@ class App {
                 div.innerHTML = html
                 const divContent = div.querySelector('.content')
                 this.template = divContent.getAttribute('data-template')
+                this.navigation.onChange(this.template)
                 this.content.setAttribute('data-template', this.template)
                 this.content.innerHTML = divContent.innerHTML
                 this.page = this.pages[this.template]
@@ -58,6 +65,10 @@ class App {
         } catch (error) {
             console.log(error)
         }
+    }
+
+    createNavigation() {
+        this.navigation = new Navigation()
     }
 
     onResize() {
