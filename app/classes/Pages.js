@@ -1,13 +1,20 @@
 import gsap from 'gsap'
 import Prefix from 'prefix'
 import normalizeWheel from 'normalize-wheel'
-
+import { each, map } from 'lodash'
+import Title from '../animations/Title'
+// import Paragraph from '../animations/Paragrapgh'
+// import Highlights from '../animations/Highlight'
 export default class Pages {
     constructor({ id, element, elements }) {
         this.id = id
         this.selector = element
         this.selectorChildren = {
             ...elements,
+            animationsTitles: '[data-animation="title"]',
+            animationsParagraphs: '[data-animation="paragraph"]',
+            animationsLabels: '[data-animation="label"]',
+            animationsHighlights: '[data-animation="highlight"]',
         }
 
         this.scroll = {
@@ -24,7 +31,7 @@ export default class Pages {
 
     // initialize current page class
     create() {
-        this.element = document.querySelector(this.selector)
+        // this.element = document.querySelector(this.selector)
         this.elements = {}
         this.scroll = {
             current: 0,
@@ -39,7 +46,7 @@ export default class Pages {
             this.element = document.querySelector(this.selector)
         }
 
-        this.elements = {}
+        // this.elements = {}
 
         Object.keys(this.selectorChildren).forEach((key) => {
             const entry = this.selectorChildren[key]
@@ -60,7 +67,55 @@ export default class Pages {
                 }
             }
         })
+
+        this.createAnimations()
     }
+
+    // text animations
+    createAnimations() {
+        this.animations = [] //simplify on resize
+
+        this.animationsTitles = map(
+            this.elements.animationsTitles,
+            (element) => {
+                return new Title({ element })
+            },
+        )
+
+        this.animations.push(...this.animationsTitles)
+
+        // //paragraph
+        // this.animationsParagraphs = map(
+        //     this.elements.animationsParagraphs,
+        //     (element) => {
+        //         return new Paragraph({ element })
+        //     },
+        // )
+
+        // this.animations.push(...this.animationsParagraphs)
+
+        // Labels
+        // this.animationsLabels = map(
+        //     this.elements.animationsLabels,
+        //     (element) => {
+        //         return new Paragraph({ element })
+        //     },
+        // )
+
+        // this.animations.push(...this.animationsLabels)
+
+        // // Highlights
+        // this.animationsHighlights = map(
+        //     this.elements.animationsHighlights,
+        //     (element) => {
+        //         return new Highlights({ element })
+        //     },
+        // )
+
+        // this.animations.push(...this.animationsHighlights)
+    }
+
+    ////////////////
 
     show() {
         return new Promise((resolve) => {
@@ -105,6 +160,10 @@ export default class Pages {
             this.scroll.limit =
                 this.elements.wrapper.clientHeight - window.innerHeight
         }
+
+        each(this.animations, (animation) => {
+            animation.onResize()
+        })
     }
 
     update() {

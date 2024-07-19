@@ -14,7 +14,7 @@ export default class Component extends EventEmitter {
 
     // initialize current page class
     create() {
-        this.element = document.querySelector(this.selector)
+        // this.element = document.querySelector(this.selector)
         this.elements = {}
 
         if (this.selector instanceof HTMLElement) {
@@ -23,7 +23,7 @@ export default class Component extends EventEmitter {
             this.element = document.querySelector(this.selector)
         }
 
-        this.elements = {}
+        // this.elements = {}
 
         Object.keys(this.selectorChildren).forEach((key) => {
             const entry = this.selectorChildren[key]
