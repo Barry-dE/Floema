@@ -3,6 +3,8 @@ import Prefix from 'prefix'
 import normalizeWheel from 'normalize-wheel'
 import { each, map } from 'lodash'
 import Title from '../animations/Title'
+import { colorsManager } from './Colors'
+import AsyncLoad from './AsyncLoad'
 // import Paragraph from '../animations/Paragrapgh'
 // import Highlights from '../animations/Highlight'
 export default class Pages {
@@ -15,6 +17,7 @@ export default class Pages {
             animationsParagraphs: '[data-animation="paragraph"]',
             animationsLabels: '[data-animation="label"]',
             animationsHighlights: '[data-animation="highlight"]',
+            imagePreloaders: '[data-src]',
         }
 
         this.scroll = {
@@ -69,8 +72,15 @@ export default class Pages {
         })
 
         this.createAnimations()
+        this.createImagePreloader()
     }
 
+    // Async load images as they enter the viewport
+    createImagePreloader() {
+        this.preloaders = map(this.elements.imagePreloaders, (element) => {
+            return new AsyncLoad({ element })
+        })
+    }
     // text animations
     createAnimations() {
         this.animations = [] //simplify on resize
@@ -119,7 +129,14 @@ export default class Pages {
 
     show() {
         return new Promise((resolve) => {
+            colorsManager.change({
+                backgroundColor: this.element.getAttribute('data-background'),
+                color: this.element.getAttribute('data-color'),
+            })
+
+            // console.log(this.element.getAttribute('data-bg-color'))
             this.animationIn = gsap.timeline()
+
             this.animationIn.fromTo(
                 this.element,
                 {

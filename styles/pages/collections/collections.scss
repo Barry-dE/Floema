@@ -1,7 +1,7 @@
 .collections {
     @extend %page;
-    background: $color-contessa;
-    color: $color-quarter-spanish-white;
+    // background: $color-contessa;
+    // color: $color-quarter-spanish-white;
 }
 
 .collections__wrapper {
@@ -20,6 +20,7 @@
     transform: translate(-50%, -50%) rotate(-90deg);
     top: 50%;
 }
+
 .collections__titles__label {
     transform: rotate(90deg);
     text-align: center;
@@ -27,6 +28,7 @@
     text-transform: uppercase;
     letter-spacing: 0.1rem;
 }
+
 .collections__titles__title {
     @extend %title-200;
     padding-top: 2rem;
@@ -57,7 +59,7 @@
 
 .collections__gallery__media__image {
     @extend %cover;
-    object-fit: cobver;
+    object-fit: cover;
 }
 
 .collections__content {
