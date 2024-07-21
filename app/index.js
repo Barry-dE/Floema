@@ -52,12 +52,12 @@ class App {
                 div.innerHTML = html
                 const divContent = div.querySelector('.content')
                 this.template = divContent.getAttribute('data-template')
-                this.navigation.onChange(this.template)
                 this.content.setAttribute('data-template', this.template)
                 this.content.innerHTML = divContent.innerHTML
                 this.page = this.pages[this.template]
                 this.page.create()
                 this.page.show()
+                this.navigation.onChange(this.template)
                 this.onResize()
 
                 this.addLinkListeners()
