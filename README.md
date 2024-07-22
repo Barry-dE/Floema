@@ -1,3 +1,3 @@
 # Floema
 ## Description
-Creative website
+Creative website with animations and interactions
