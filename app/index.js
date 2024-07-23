@@ -5,16 +5,17 @@ import About from './pages/About'
 import { each } from 'lodash'
 import Preloader from './components/preloader'
 import Navigation from './components/navigation'
+import Canvas from './components/Canvas'
 
 class App {
     constructor() {
         this.createContent()
         this.createPreloader()
         this.createPages()
-
+        this.createNavigation()
+        this.createCanvas()
         this.addLinkListeners()
         this.addEventListeners()
-        this.createNavigation()
 
         this.update() //smooth scroll
     }
@@ -31,14 +32,11 @@ class App {
         // current page
         this.page = this.pages[this.template]
         this.page.create()
-        console.log(this.page)
-        console.log(this.template, 'coming from create pages method')
     }
 
     createContent() {
         this.content = document.querySelector('.content')
         this.template = this.content.getAttribute('data-template')
-        console.log(this.template, 'coming from create pages method')
     }
 
     async onUrlChange(url) {
@@ -55,9 +53,9 @@ class App {
                 this.content.setAttribute('data-template', this.template)
                 this.content.innerHTML = divContent.innerHTML
                 this.page = this.pages[this.template]
+                this.navigation.onChange(this.template)
                 this.page.create()
                 this.page.show()
-                this.navigation.onChange(this.template)
                 this.onResize()
 
                 this.addLinkListeners()
@@ -75,6 +73,10 @@ class App {
         //call onresize for the current page if it has it
         if (this.page && this.page.onResize) {
             this.page.onResize()
+        }
+
+        if (this.canvas && this.canvas.onResize) {
+            this.canvas.onResize()
         }
     }
 
@@ -108,11 +110,20 @@ class App {
             this.page.update()
         }
 
+        if (this.canvas && this.canvas.update) {
+            this.canvas.update()
+        }
+
         this.frame = window.requestAnimationFrame(this.update.bind(this))
     }
 
     addEventListeners() {
         window.addEventListener('resize', this.onResize.bind(this))
+    }
+
+    //Ogl
+    createCanvas() {
+        this.canvas = new Canvas()
     }
 }
 
