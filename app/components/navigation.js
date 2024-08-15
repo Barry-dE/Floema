@@ -1,10 +1,6 @@
-import gsap from 'gsap'
 import Component from '../classes/Component'
-import {
-    COLOR_BRIGHT_GREY,
-    COLOR_QUATER_SPANISH_WHITE,
-} from '../classes/Colors'
-
+import { COLOR_BRIGHT_GREY, COLOR_QUATER_SPANISH_WHITE } from '../utils/color'
+import gsap from 'gsap'
 export default class Navigation extends Component {
     constructor() {
         super({
@@ -16,7 +12,7 @@ export default class Navigation extends Component {
         })
     }
 
-    onChange(template) {
+    onChange({ template }) {
         if (template === 'about') {
             gsap.to(this.element, {
                 color: COLOR_BRIGHT_GREY,

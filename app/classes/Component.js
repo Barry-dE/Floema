@@ -4,6 +4,7 @@ export default class Component extends EventEmitter {
     constructor({ element, elements }) {
         super()
         this.selector = element
+
         this.selectorChildren = {
             ...elements,
         }
@@ -23,7 +24,7 @@ export default class Component extends EventEmitter {
             this.element = document.querySelector(this.selector)
         }
 
-        // this.elements = {}
+        this.elements = {}
 
         Object.keys(this.selectorChildren).forEach((key) => {
             const entry = this.selectorChildren[key]
@@ -45,6 +46,34 @@ export default class Component extends EventEmitter {
             }
         })
     }
+
+    // create() {
+    //     if (this.selector instanceof HTMLElement) {
+    //         this.element = this.selector
+    //     } else {
+    //         this.element = document.querySelector(this.selector)
+    //     }
+
+    //     this.elements = {}
+
+    //     Object.entries(this.selectorChildren).forEach(([key, entry]) => {
+    //         if (
+    //             entry instanceof window.HTMLElement ||
+    //             entry instanceof window.NodeList ||
+    //             Array.isArray(entry)
+    //         ) {
+    //             this.elements[key] = entry
+    //         } else {
+    //             this.elements[key] = [...document.querySelectorAll(entry)]
+
+    //             if (this.elements[key].length === 0) {
+    //                 this.elements[key] = null
+    //             } else if (this.elements[key].length === 1) {
+    //                 this.elements[key] = this.elements[key][0]
+    //             }
+    //         }
+    //     })
+    // }
 
     addEventListeners() {}
 

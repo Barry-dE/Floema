@@ -17,7 +17,8 @@ class App {
         this.addLinkListeners()
         this.addEventListeners()
 
-        this.update() //smooth scroll
+        this.update()
+        this.navigation.onChange({ template: this.template })
     }
 
     // Routing
@@ -53,9 +54,9 @@ class App {
                 this.content.setAttribute('data-template', this.template)
                 this.content.innerHTML = divContent.innerHTML
                 this.page = this.pages[this.template]
-                this.navigation.onChange(this.template)
                 this.page.create()
                 this.page.show()
+                this.navigation.onChange({ template: this.template })
                 this.onResize()
 
                 this.addLinkListeners()
@@ -70,7 +71,6 @@ class App {
     }
 
     onResize() {
-        //call onresize for the current page if it has it
         if (this.page && this.page.onResize) {
             this.page.onResize()
         }

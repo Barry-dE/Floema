@@ -8,6 +8,11 @@ export default class AsyncLoad extends Component {
     }
 
     createObserver() {
+        const imgOptions = {
+            rootMargin: '500px',
+            threshold: 0.01,
+        }
+
         this.observer = new IntersectionObserver((enteries) => {
             enteries.forEach((entry) => {
                 if (entry.isIntersecting) {
@@ -18,7 +23,7 @@ export default class AsyncLoad extends Component {
                         }
                     }
                 }
-            })
+            }, imgOptions)
         })
 
         this.observer.observe(this.element)

@@ -7,6 +7,7 @@ import { colorsManager } from './Colors'
 import AsyncLoad from './AsyncLoad'
 // import Paragraph from '../animations/Paragrapgh'
 // import Highlights from '../animations/Highlight'
+
 export default class Pages {
     constructor({ id, element, elements }) {
         this.id = id
@@ -49,7 +50,7 @@ export default class Pages {
             this.element = document.querySelector(this.selector)
         }
 
-        // this.elements = {}
+        this.elements = {}
 
         Object.keys(this.selectorChildren).forEach((key) => {
             const entry = this.selectorChildren[key]
@@ -78,9 +79,10 @@ export default class Pages {
     // Async load images as they enter the viewport
     createImagePreloader() {
         this.preloaders = map(this.elements.imagePreloaders, (element) => {
-            return new AsyncLoad({ element })
+            return new AsyncLoad({ element: element })
         })
     }
+
     // text animations
     createAnimations() {
         this.animations = [] //simplify on resize
@@ -134,7 +136,6 @@ export default class Pages {
                 color: this.element.getAttribute('data-color'),
             })
 
-            // console.log(this.element.getAttribute('data-bg-color'))
             this.animationIn = gsap.timeline()
 
             this.animationIn.fromTo(
@@ -157,7 +158,7 @@ export default class Pages {
 
     hide() {
         return new Promise((resolve) => {
-            this.removeEventListeners()
+            this.destroy()
             this.animateOut = gsap.timeline()
             this.animateOut.to(this.element, {
                 autoAlpha: 0,
@@ -212,5 +213,10 @@ export default class Pages {
 
     removeEventListeners() {
         window.removeEventListener('mousewheel', this.onMouseWheelEvent)
+    }
+
+    //Destroy
+    destroy() {
+        this.removeEventListeners()
     }
 }
