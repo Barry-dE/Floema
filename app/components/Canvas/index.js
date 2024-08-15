@@ -1,12 +1,13 @@
-import { Camera, Renderer, Transform, Mesh, Program, Box } from 'ogl'
-import vertex from '../../shaders/plane-vertex.glsl'
-import fragment from '../../shaders/plane-fragment.glsl'
+import { Camera, Renderer, Transform } from 'ogl'
+
+import Home from './Home'
 export default class Canvas {
     constructor() {
         this.createRenderer()
         this.createCamera()
         this.createScene()
-        this.createCube()
+        this.onResize()
+        this.createHome()
     }
 
     createRenderer() {
@@ -19,19 +20,11 @@ export default class Canvas {
         this.scene = new Transform()
     }
 
-    createCube() {
-        this.geometry = new Box(this.gl)
-
-        this.program = new Program(this.gl, {
-            vertex,
-            fragment,
+    createHome() {
+        this.home = new Home({
+            gl: this.gl,
+            scene: this.scene,
         })
-
-        this.mesh = new Mesh(this.gl, {
-            geometry: this.geometry,
-            program: this.program,
-        })
-        this.mesh.setParent(this.scene)
     }
 
     createCamera() {
@@ -45,11 +38,23 @@ export default class Canvas {
         this.camera.perspective({
             aspect: window.innerWidth / window.innerHeight,
         })
+
+        const fov = this.camera.fov * (Math.PI / 180)
+        const height = 2 * Math.tan(fov / 2) * this.camera.position.z
+        const width = height * this.camera.aspect
+        this.sizes = {
+            height,
+            width,
+        }
+
+        if (this.home) {
+            this.home.onResize({
+                sizes: this.sizes,
+            })
+        }
     }
 
     update() {
-        this.mesh.rotation.x += 0.01
-        this.mesh.rotation.y += 0.01
         this.renderer.render({
             camera: this.camera,
             scene: this.scene,
