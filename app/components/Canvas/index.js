@@ -21,7 +21,10 @@ export default class Canvas {
     }
 
     createRenderer() {
-        this.renderer = new Renderer()
+        this.renderer = new Renderer({
+            alpha: true,
+            antialias: true,
+        })
         this.gl = this.renderer.gl
         document.body.appendChild(this.gl.canvas)
     }
@@ -65,6 +68,7 @@ export default class Canvas {
     }
 
     onTouchDown(event) {
+        if (!event) return
         this.isDown = true
 
         this.x.start = event.touches ? event.touches[0].clientX : event.clientX
@@ -94,7 +98,6 @@ export default class Canvas {
                 y: this.y,
             })
         }
-        // console.log('move', this.x, this.y)
     }
 
     onTouchUp(event) {
@@ -111,6 +114,12 @@ export default class Canvas {
                 x: this.x,
                 y: this.y,
             })
+        }
+    }
+
+    onWheel({ event }) {
+        if (this.home) {
+            this.home.onWheel(event)
         }
     }
 

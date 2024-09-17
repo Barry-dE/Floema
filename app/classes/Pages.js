@@ -1,6 +1,5 @@
 import gsap from 'gsap'
 import Prefix from 'prefix'
-import normalizeWheel from 'normalize-wheel'
 import { each, map } from 'lodash'
 import Title from '../animations/Title'
 import { colorsManager } from './Colors'
@@ -29,8 +28,6 @@ export default class Pages {
         }
 
         this.transformPrefix = Prefix('transform')
-
-        this.onMouseWheelEvent = this.onMouseWheel.bind(this)
     }
 
     // initialize current page class
@@ -167,12 +164,6 @@ export default class Pages {
         })
     }
 
-    // smooth scroll
-    onMouseWheel(e) {
-        const { pixelY } = normalizeWheel(e)
-        this.scroll.target += pixelY
-    }
-
     onResize() {
         if (this.elements.wrapper) {
             this.scroll.limit =
@@ -182,6 +173,11 @@ export default class Pages {
         each(this.animations, (animation) => {
             animation.onResize()
         })
+    }
+
+    // smooth scroll
+    onWheel(pixelY) {
+        this.scroll.target += pixelY
     }
 
     update() {
@@ -208,11 +204,11 @@ export default class Pages {
     }
 
     addEventListeners() {
-        window.addEventListener('mousewheel', this.onMouseWheelEvent)
+        // window.addEventListener('mousewheel', this.onMouseWheelEvent)
     }
 
     removeEventListeners() {
-        window.removeEventListener('mousewheel', this.onMouseWheelEvent)
+        // window.removeEventListener('mousewheel', this.onMouseWheelEvent)
     }
 
     //Destroy

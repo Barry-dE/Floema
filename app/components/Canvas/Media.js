@@ -15,6 +15,11 @@ export default class {
         this.createTexture()
         this.createProgram()
         this.createMesh()
+
+        this.extra = {
+            x: 0,
+            y: 0,
+        }
     }
 
     createTexture() {
@@ -44,8 +49,7 @@ export default class {
         })
 
         this.mesh.setParent(this.scene)
-
-        this.mesh.scale.x = 2
+        this.mesh.rotation.z = gsap.utils.random(-Math.PI * 0.02, Math.PI * 0.1)
     }
 
     createBounds({ sizes }) {
@@ -70,7 +74,8 @@ export default class {
         this.mesh.position.x =
             -this.sizes.width / 2 +
             this.mesh.scale.x / 2 +
-            this.x * this.sizes.width
+            this.x * this.sizes.width +
+            this.extra.x
     }
 
     updateY(y = 0) {
@@ -78,7 +83,8 @@ export default class {
         this.mesh.position.y =
             this.sizes.height / 2 -
             this.mesh.scale.y / 2 -
-            this.y * this.sizes.height
+            this.y * this.sizes.height +
+            this.extra.y
     }
 
     update(scroll) {
