@@ -5,18 +5,21 @@ import About from './pages/About'
 import { each } from 'lodash'
 import Preloader from './components/preloader'
 import Navigation from './components/navigation'
+import Canvas from './components/Canvas'
+import normalizeWheel from 'normalize-wheel'
 
 class App {
     constructor() {
         this.createContent()
         this.createPreloader()
         this.createPages()
-
+        this.createNavigation()
+        this.createCanvas()
         this.addLinkListeners()
         this.addEventListeners()
-        this.createNavigation()
 
-        this.update() //smooth scroll
+        this.update()
+        this.navigation.onChange({ template: this.template })
     }
 
     // Routing
@@ -31,14 +34,11 @@ class App {
         // current page
         this.page = this.pages[this.template]
         this.page.create()
-        console.log(this.page)
-        console.log(this.template, 'coming from create pages method')
     }
 
     createContent() {
         this.content = document.querySelector('.content')
         this.template = this.content.getAttribute('data-template')
-        console.log(this.template, 'coming from create pages method')
     }
 
     async onUrlChange(url) {
@@ -57,7 +57,7 @@ class App {
                 this.page = this.pages[this.template]
                 this.page.create()
                 this.page.show()
-                this.navigation.onChange(this.template)
+                this.navigation.onChange({ template: this.template })
                 this.onResize()
 
                 this.addLinkListeners()
@@ -72,9 +72,12 @@ class App {
     }
 
     onResize() {
-        //call onresize for the current page if it has it
         if (this.page && this.page.onResize) {
             this.page.onResize()
+        }
+
+        if (this.canvas && this.canvas.onResize) {
+            this.canvas.onResize()
         }
     }
 
@@ -108,11 +111,60 @@ class App {
             this.page.update()
         }
 
+        if (this.canvas && this.canvas.update) {
+            this.canvas.update()
+        }
+
         this.frame = window.requestAnimationFrame(this.update.bind(this))
     }
 
+    onTouchDown(event) {
+        if (this.canvas && this.canvas.onTouchDown) {
+            this.canvas.onTouchDown(event)
+        }
+    }
+
+    onTouchMove(event) {
+        if (this.canvas && this.canvas.onTouchMove) {
+            this.canvas.onTouchMove(event)
+        }
+    }
+
+    onTouchUp(event) {
+        if (this.canvas && this.canvas.onTouchUp) {
+            this.canvas.onTouchUp(event)
+        }
+    }
+
+    onWheel(event) {
+        const normalizedWheel = normalizeWheel(event)
+
+        if (this.page && this.page.onWheel) {
+            this.page.onWheel(normalizedWheel)
+        }
+
+        if (this.canvas && this.canvas.onWheel) {
+            this.canvas.onWheel(normalizedWheel)
+        }
+    }
+
     addEventListeners() {
+        window.addEventListener('mousewheel', this.onWheel.bind(this))
+
+        window.addEventListener('mousedown', this.onTouchDown.bind(this))
+        window.addEventListener('mousemove', this.onTouchMove.bind(this))
+        window.addEventListener('mouseup', this.onTouchUp.bind(this))
+
+        window.addEventListener('touchstart', this.onTouchDown.bind(this))
+        window.addEventListener('touchmove', this.onTouchMove.bind(this))
+        window.addEventListener('touchend', this.onTouchUp.bind(this))
+
         window.addEventListener('resize', this.onResize.bind(this))
+    }
+
+    //Ogl
+    createCanvas() {
+        this.canvas = new Canvas()
     }
 }
 

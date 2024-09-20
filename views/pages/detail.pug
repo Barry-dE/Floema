@@ -27,8 +27,6 @@ block content
 
 
                     .detail_information_list
-                        script.
-                            console.log(!{JSON.stringify(product.data, null, 2)});
                         each item in product.data.informations
                             p.detail_information-item
                                 strong.detail_information_item_title=item.informations_label

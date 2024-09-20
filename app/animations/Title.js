@@ -29,7 +29,7 @@ export default class Title extends Animation {
         })
 
         gsap.set(this.timelineIn, {
-            autoAlpha: 1,
+            opacity: 0,
         })
 
         each(this.elementsLines, (line, index) => {
@@ -37,7 +37,7 @@ export default class Title extends Animation {
                 line,
                 {
                     y: '100%',
-                    autoAlpha: 0,
+                    // autoAlpha: 0,
                 },
                 {
                     autoAlpha: 1,

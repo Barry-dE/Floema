@@ -1,12 +1,12 @@
 import gsap from 'gsap'
 import Prefix from 'prefix'
-import normalizeWheel from 'normalize-wheel'
 import { each, map } from 'lodash'
 import Title from '../animations/Title'
 import { colorsManager } from './Colors'
 import AsyncLoad from './AsyncLoad'
 // import Paragraph from '../animations/Paragrapgh'
 // import Highlights from '../animations/Highlight'
+
 export default class Pages {
     constructor({ id, element, elements }) {
         this.id = id
@@ -28,8 +28,6 @@ export default class Pages {
         }
 
         this.transformPrefix = Prefix('transform')
-
-        this.onMouseWheelEvent = this.onMouseWheel.bind(this)
     }
 
     // initialize current page class
@@ -49,7 +47,7 @@ export default class Pages {
             this.element = document.querySelector(this.selector)
         }
 
-        // this.elements = {}
+        this.elements = {}
 
         Object.keys(this.selectorChildren).forEach((key) => {
             const entry = this.selectorChildren[key]
@@ -78,9 +76,10 @@ export default class Pages {
     // Async load images as they enter the viewport
     createImagePreloader() {
         this.preloaders = map(this.elements.imagePreloaders, (element) => {
-            return new AsyncLoad({ element })
+            return new AsyncLoad({ element: element })
         })
     }
+
     // text animations
     createAnimations() {
         this.animations = [] //simplify on resize
@@ -134,7 +133,6 @@ export default class Pages {
                 color: this.element.getAttribute('data-color'),
             })
 
-            // console.log(this.element.getAttribute('data-bg-color'))
             this.animationIn = gsap.timeline()
 
             this.animationIn.fromTo(
@@ -157,19 +155,13 @@ export default class Pages {
 
     hide() {
         return new Promise((resolve) => {
-            this.removeEventListeners()
+            this.destroy()
             this.animateOut = gsap.timeline()
             this.animateOut.to(this.element, {
                 autoAlpha: 0,
                 onComplete: resolve,
             })
         })
-    }
-
-    // smooth scroll
-    onMouseWheel(e) {
-        const { pixelY } = normalizeWheel(e)
-        this.scroll.target += pixelY
     }
 
     onResize() {
@@ -181,6 +173,11 @@ export default class Pages {
         each(this.animations, (animation) => {
             animation.onResize()
         })
+    }
+
+    // smooth scroll
+    onWheel(pixelY) {
+        this.scroll.target += pixelY
     }
 
     update() {
@@ -207,10 +204,15 @@ export default class Pages {
     }
 
     addEventListeners() {
-        window.addEventListener('mousewheel', this.onMouseWheelEvent)
+        // window.addEventListener('mousewheel', this.onMouseWheelEvent)
     }
 
     removeEventListeners() {
-        window.removeEventListener('mousewheel', this.onMouseWheelEvent)
+        // window.removeEventListener('mousewheel', this.onMouseWheelEvent)
+    }
+
+    //Destroy
+    destroy() {
+        this.removeEventListeners()
     }
 }

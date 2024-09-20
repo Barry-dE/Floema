@@ -16,7 +16,7 @@ export default class Paragraph extends Animation {
             append: true,
         })
 
-        console.log(this.elementLinesSpans)
+       
     }
 
     animateIn() {
